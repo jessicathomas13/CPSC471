@@ -81,7 +81,7 @@ border: 0px solid black!important;
           
           <?php
 
-			if(isset($_POST['submit'])) {
+	if(isset($_POST['submit'])) {
         
         $bkid = $_POST['bookid'];
         $bkname = $_POST['title'];
@@ -97,15 +97,13 @@ border: 0px solid black!important;
         $sql_query = "insert into book (bookid, genre, title, publishername, bookimg) values('$bkid', '$genre', '$bkname', '$pbname', '$filename')";
 
         if (mysqli_query($con, $sql_query)) {
-                  echo "<script>alert('Book Listed successfully');</script>";
-                  echo "<script>window.location.href='admin-dashboard.php'</script>";}
+	  echo "<script>alert('Book Listed successfully');</script>";
+	  echo "<script>window.location.href='admin-dashboard.php'</script>";}
 
       
-
- 
-			else {
-  				echo "Error: " . $sql_query . "<br>" . mysqli_error($con);	}
-			}
+	else {
+		echo "Error: " . $sql_query . "<br>" . mysqli_error($con);	}
+	}
 
 		?>
           	

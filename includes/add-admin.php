@@ -8,7 +8,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $employeeId = $_POST["employee_id"];
     $name = $_POST["name"];
     $branchId = $_POST["branch_id"];
+    $password = $_POST["password"];
     $filename = "all-admins.txt";
+
+    $sql_query = "insert into admin values('$name', '$employeeId', '$branchId', '$password')";
+
+    if (mysqli_query($con, $sql_query)) {
+              echo "success";}
+    else {
+              echo "Error: " . $sql_query . "<br>" . mysqli_error($con);	}
+
+    
 
     // Check if the file exists
     if (file_exists($filename)) {
@@ -42,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $message = "Error: Unable to create the file.";
         }
     }
-}
+  }
 ?>
 
 <!DOCTYPE html>
@@ -82,10 +92,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               <div class="form-group">
                 <label for="name">Name:</label>
                 <input type="text" id="name" name="name" class="form-control" required>
-              </div>
+              
               <div class="form-group">
-                <label for="branch_id">Branch ID:</label>
-                <input type="text" id="branch_id" name="branch_id" class="form-control" required>
+                  <label for="">Branch</label>
+                  <select class="form-control" name="branch_id" required="required">
+                  <option value=""> Select Branch</option>
+                  <?php
+                    $sql = "SELECT * from  branch ";
+                    $result = mysqli_query($con,$sql);
+                    while ($row = mysqli_fetch_assoc($result)){
+                      ?>
+                      <option value="<?php echo $row['BranchID'];?>"><?php echo $row['Branch Name'];?></option>
+                      <?php } ?> 
+                  </select>
+              </div>
+              <label>Password</label>
+              <input class="form-control" type="password" name="password" required autocomplete="off"  />
+             
               </div>
               <div class="form-group">
                 <input type="submit" value="Submit" class="btn btn-primary">

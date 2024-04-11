@@ -89,20 +89,18 @@ border: 0px solid black!important;
         $pbname =  $_POST['publishername'] ;
         $filename = $_FILES['bookimg']['name'];
         $name = "bookimg/" .$_FILES['bookimg']['name'];
-        $tmp_name = $_FILES['bookimg']['tmp_name'];
-        echo "book img" . $filename;
-        echo "w" . $tmp_name;    
+        $tmp_name = $_FILES['bookimg']['tmp_name'];   
           
             
 
-      if(move_uploaded_file($tmp_name, $name)){
+     	move_uploaded_file($tmp_name, $name);
         $sql_query = "insert into book (bookid, genre, title, publishername, bookimg) values('$bkid', '$genre', '$bkname', '$pbname', '$filename')";
 
         if (mysqli_query($con, $sql_query)) {
                   echo "<script>alert('Book Listed successfully');</script>";
                   echo "<script>window.location.href='admin-dashboard.php'</script>";}
 
-      }
+      
 
  
 			else {

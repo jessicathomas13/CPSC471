@@ -81,7 +81,7 @@ border: 0px solid black!important;
           
           <?php
 
-			if(isset($_POST['submit'])) {
+      if(isset($_POST['submit'])) {
         
         $bkid = $_POST['bookid'];
         $bkname = $_POST['title'];
@@ -94,7 +94,7 @@ border: 0px solid black!important;
           
             
 
-      move_uploaded_file($tmp_name, $name);
+        move_uploaded_file($tmp_name, $name);
         $sql_query = "insert into book (bookid, genre, title, publishername, bookimg) values('$bkid', '$genre', '$bkname', '$pbname', '$filename')";
 
         if (mysqli_query($con, $sql_query)) {

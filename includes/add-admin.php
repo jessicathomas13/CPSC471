@@ -11,48 +11,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST["password"];
     $filename = "all-admins.txt";
 
-    $sql_query = "insert into admin values('$name', '$employeeId', '$branchId', '$password')";
+    // Check if the employee ID already exists in the database
+    $sql_check = "SELECT * FROM admin WHERE EmpID = '$employeeId'";
+    $result_check = mysqli_query($con, $sql_check);
 
-    if (mysqli_query($con, $sql_query)) {
-              echo "success";}
-    else {
-              echo "Error: " . $sql_query . "<br>" . mysqli_error($con);	}
-
-    
-
-    // Check if the file exists
-    if (file_exists($filename)) {
-        // Read the contents of the file
-        $existingAdmins = file_get_contents($filename);
-
-        // Check if the employee ID already exists
-        if (strpos($existingAdmins, $employeeId) !== false) {
-            $message = "Error: Employee ID already exists.";
-        } else {
-            // Append the new admin to the existing contents
-            $existingAdmins .= $employeeId . "," . $name . "," . $branchId . "\n";
-
-            // Write the updated contents back to the file
-            if (file_put_contents($filename, $existingAdmins) !== false) {
-                $message = "Admin added successfully! You will be redirected shortly.";
-                header("Refresh: 3; URL=all-admins.php");
-                exit;
-            } else {
-                $message = "Error: Unable to write to the file.";
-            }
-        }
+    if (mysqli_num_rows($result_check) > 0) {
+        $message = "Error: Employee ID already exists in the database.";
     } else {
-        // Create a new file and add the new admin
-        $newAdmin = $employeeId . "," . $name . "," . $branchId . "\n";
-        if (file_put_contents($filename, $newAdmin) !== false) {
+        $sql_query = "INSERT INTO admin VALUES ('$name', '$employeeId', '$branchId', '$password')";
+
+        if (mysqli_query($con, $sql_query)) {
+            // Append the new admin details to the all-admins.txt file
+            $newAdminDetails = $employeeId . "," . $name . "," . $branchId . "\n";
+            file_put_contents($filename, $newAdminDetails, FILE_APPEND);
+
             $message = "Admin added successfully! You will be redirected shortly.";
             header("Refresh: 3; URL=all-admins.php");
             exit;
         } else {
-            $message = "Error: Unable to create the file.";
+            $message = "Error: " . $sql_query . "<br>" . mysqli_error($con);
         }
     }
-  }
+}
 ?>
 
 <!DOCTYPE html>

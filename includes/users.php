@@ -10,8 +10,8 @@ if (!isset($_SESSION['empid'])) {
 
 $users = [];  // Array to hold user data
 
-// SQL query to fetch all user data
-$query = "SELECT Cardno, BranchID, Name, Address, `Phone no.` FROM user"; // Modify with your actual table columns
+// SQL query to fetch user data
+$query = "SELECT Cardno, Name FROM user"; // Fetch only Cardno and Name
 $stmt = $con->prepare($query);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -94,18 +94,14 @@ while ($row = $result->fetch_assoc()) {
     <table class="user-list">
         <tr>
             <th>Card Number</th>
-            <th>Branch ID</th>
             <th>Name</th>
-            <th>Address</th>
-            <th>Phone Number</th>
+            <th>Details</th>
         </tr>
         <?php foreach ($users as $user): ?>
             <tr>
                 <td><?= htmlspecialchars($user['Cardno']); ?></td>
-                <td><?= htmlspecialchars($user['BranchID']); ?></td>
                 <td><?= htmlspecialchars($user['Name']); ?></td>
-                <td><?= htmlspecialchars($user['Address']); ?></td>
-                <td><?= htmlspecialchars($user['Phone no.']); ?></td>
+                <td><a href="user-details.php?cardno=<?= urlencode($user['Cardno']); ?>">user profile</a></td>
             </tr>
         <?php endforeach; ?>
     </table>

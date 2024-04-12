@@ -14,6 +14,19 @@ include('sqlconnect.php');
     <title>Publisher Management</title>
     <link rel="stylesheet" href="assets/bootstrap.css">
     <link rel="stylesheet" href="assets/font-awesome.css">
+    <script>
+        function toggleDelete(shouldShow) {
+            const checkboxes = document.querySelectorAll('.delete-checkbox');
+            const deleteBtn = document.getElementById('delete-btn');
+            checkboxes.forEach(cb => cb.style.display = shouldShow ? 'block' : 'none');
+            deleteBtn.style.display = shouldShow ? 'block' : 'none';
+        }
+
+        function confirmDeletion() {
+            const checkedBoxes = document.querySelectorAll('.delete-checkbox:checked');
+            return checkedBoxes.length > 0 ? confirm('Are you sure you want to delete the selected publishers?') : false;
+        }
+    </script>
     <style>
       body {
         font-family: Arial, sans-serif;
@@ -50,11 +63,16 @@ include('sqlconnect.php');
         font-size: 24px;
         margin: 0;
       }
+      .delete-checkbox, #delete-btn {
+            display: none; /* Hide checkboxes and delete button by default */
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
     <nav class="navbar">
         <h1>Publishers</h1>
+        <a href="#" onclick="toggleDelete(true)">Delete Publisher</a>
         <a href="admin-dashboard.php">Home</a>
         <a href="add-publisher.php">Add Publisher</a>
     </nav>
@@ -63,19 +81,21 @@ include('sqlconnect.php');
         <div class="container">
             <div class="row pad-botm">
                 <div class="col-md-12">
-                    <!-- Publishers List Start -->
-                    <?php  
-                    $sql = "SELECT * FROM publisher";
-                    $result = mysqli_query($con, $sql);
-
-                    while ($row = mysqli_fetch_assoc($result)) { ?>  
-                        <div class="col-md-4" style="float:left; height:300px;">   
-                            <b><?php echo $row['Name'];?></b><br />
-                            <?php echo $row['Address'];?><br />
-                            <?php echo $row['Phone'];?><br />
-                        </div>
-                    <?php } ?>  
-                    <!-- Publishers List End -->
+                    <form method="POST" action="delete-publisher.php" onsubmit="return confirmDeletion();">
+                      <?php
+                        $sql = "SELECT * FROM publisher";
+                        $result = mysqli_query($con, $sql);
+                        
+                        while ($row = mysqli_fetch_assoc($result)) { ?>
+                            <div class="col-md-4" style="float:left; height:300px;">
+                                <b><?php echo $row['Name'];?></b><br />
+                                <?php echo $row['Address'];?><br />
+                                <?php echo $row['Phone'];?><br />
+                                <input type="checkbox" class="delete-checkbox" name="delete_ids[]" value="<?php echo $row['ID']; ?>"><br>
+                            </div>
+                        <?php } ?>
+                        <button type="submit" id="delete-btn" class="btn btn-danger">Delete Selected</button>
+                    </form>
                 </div>
             </div>
         </div>

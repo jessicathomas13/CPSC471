@@ -13,7 +13,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sql_query = "insert into event values('$eventId', '$branchId', '$date', '$description')";
 
     if (mysqli_query($con, $sql_query)) {
-              echo "success";}
+              echo "<script>alert('Event added successfully!');</script>";
+        echo "<script>window.location.href='event.php'</script>";}
     else {
               echo "Error: " . $sql_query . "<br>" . mysqli_error($con);	}
 

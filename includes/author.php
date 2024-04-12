@@ -58,6 +58,8 @@ include('sqlconnect.php');
         <h1>Authors</h1>
         <a href="admin-dashboard.php">Home</a>
         <a href="add-author.php">Add Author</a>
+        <a href="delete-author.php">Delete Author</a>
+        <a href="edit-author.php">Edit Author</a>
     </nav>
 
     <div class="content-wrapper">

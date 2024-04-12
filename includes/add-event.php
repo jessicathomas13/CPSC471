@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (mysqli_query($con, $sql_query)) {
               echo "<script>alert('Event added successfully!');</script>";
-        echo "<script>window.location.href='event.php'</script>";}
+        echo "<script>window.location.href='admin-event.php'</script>";}
     else {
               echo "Error: " . $sql_query . "<br>" . mysqli_error($con);	}
 

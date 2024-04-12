@@ -2,39 +2,56 @@
 session_start();
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-include('sqlconnect.php'); // Ensure this file has the correct database connection setup.
+include('sqlconnect.php');
 
-$message = ''; // Initialize the message variable
+$message = '';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $employeeId = $_POST["employee_id"];
-        
-        // SQL query to check if the admin exists
-        $checkSql = "SELECT * FROM admin WHERE EmpID = ?";
-        $checkStmt = mysqli_prepare($con, $checkSql);
-        mysqli_stmt_bind_param($checkStmt, "s", $employeeId);
-        mysqli_stmt_execute($checkStmt);
-        mysqli_stmt_store_result($checkStmt);
-        
-        if (mysqli_stmt_num_rows($checkStmt) > 0) {
-                // Admin exists, proceed with deletion
-                // SQL query to delete an admin
-                $deleteSql = "DELETE FROM admin WHERE EmpID = ?";
-                $deleteStmt = mysqli_prepare($con, $deleteSql);
-                mysqli_stmt_bind_param($deleteStmt, "s", $employeeId);
-                
-                if (mysqli_stmt_execute($deleteStmt)) {
-                        $message = "Admin deleted successfully!";
-                } else {
-                        $message = "Error deleting admin: " . mysqli_stmt_error($deleteStmt);
-                }
-                
-                mysqli_stmt_close($deleteStmt);
+    $employeeId = $_POST["employee_id"];
+
+    // Begin transaction to ensure atomicity
+    mysqli_begin_transaction($con);
+
+    try {
+        // SQL query to delete an admin
+        $sql = "DELETE FROM admin WHERE EmpID = ?";
+        $stmt = mysqli_prepare($con, $sql);
+        mysqli_stmt_bind_param($stmt, "s", $employeeId);
+
+        // Execute and check if successful
+        if (mysqli_stmt_execute($stmt)) {
+            if (mysqli_affected_rows($con) > 0) {
+                $message = "Admin deleted successfully.";
+
+                // Read the contents of the file
+                $admins = file('all-admins.txt', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+                $newContent = array_filter($admins, function ($line) use ($employeeId) {
+                    // Check if the line does not contain the employeeId
+                    return !str_contains($line, $employeeId);
+                });
+
+                // Write the new contents back to the file
+                file_put_contents('all-admins.txt', implode("\n", $newContent) . "\n");
+
+                // Commit the transaction
+                mysqli_commit($con);
+
+                // Redirect to all-admins page
+                header("Location: all-admins.php");
+                exit();
+            } else {
+                throw new Exception("No admin found with that ID.");
+            }
         } else {
-                $message = "Admin does not exist!";
+            throw new Exception("Error deleting admin: " . mysqli_stmt_error($stmt));
         }
-        
-        mysqli_stmt_close($checkStmt);
+
+        mysqli_stmt_close($stmt);
+    } catch (Exception $e) {
+        // An exception has been thrown, rollback the transaction
+        mysqli_rollback($con);
+        $message = $e->getMessage();
+    }
 }
 ?>
 

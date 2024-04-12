@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $result_check = mysqli_query($con, $sql_check);
 
     if (mysqli_num_rows($result_check) > 0) {
-        $message = "Error: Card number already exists in the database.";
+        $message = "Card number already exists in the database.";
     } else {
         $sql_insert = "INSERT INTO user (Cardno, BranchID, Name, Address, `Phone no.`, Password, Status) VALUES (?, ?, ?, ?, ?, ?, ?)";
         $stmt = $con->prepare($sql_insert);
@@ -43,60 +43,69 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Add User</title>
-  <link rel="stylesheet" href="css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <style>
-    .card {
-      box-shadow: 1px 14px 46px -25px rgba(0,0,0,0.75);
-      -webkit-box-shadow: 1px 14px 46px -25px rgba(0,0,0,0.75);
-      -moz-box-shadow: 1px 14px 46px -25px rgba(0,0,0,0.75);
-      border: 0px solid black!important;
-      border-radius: 5px;
+    body {
+        background-color: #f8f9fa;
+        padding-top: 50px;
+    }
+    .container {
+        max-width: 500px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+        margin: auto;
+    }
+    h1 {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    .form-group {
+        margin-bottom: 20px;
+    }
+    label {
+        font-weight: bold;
+    }
+    .btn-primary {
+        width: 100%;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1 class="text-center">Add User</h1>
-    <div class="card border-left-primary shadow h-1000 py-10">
-      <div class="card-body">
-        <div class="row">
-          <div class="col-md-6">
-            <form action="add-user.php" method="POST">
-              <div class="form-group">
-                <label for="cardno">Card Number</label>
-                <input type="text" id="cardno" name="cardno" class="form-control" required>
-              </div>
-              <div class="form-group">
-                <label for="branch_id">Branch ID</label>
-                <input type="text" id="branch_id" name="branch_id" class="form-control" required>
-              </div>
-              <div class="form-group">
-                <label for="name">Name</label>
-                <input type="text" id="name" name="name" class="form-control" required>
-              </div>
-              <div class="form-group">
-                <label for="address">Address</label>
-                <input type="text" id="address" name="address" class="form-control" required>
-              </div>
-              <div class="form-group">
-                <label for="phone_number">Phone Number</label>
-                <input type="text" id="phone_number" name="phone_number" class="form-control" required>
-              </div>
-              <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" class="form-control" required>
-              </div>
-              <div class="form-group">
-                <input type="submit" value="Add User" class="btn btn-primary">
-              </div>
-            </form>
-            <?php if (isset($message)) { echo "<div class='alert alert-info'>$message</div>"; } ?>
-          </div>
-        </div>
+    <h1>Add User</h1>
+    <!-- Display message here, right under the page header and above the form -->
+    <?php if (isset($message)) { echo "<div class='alert alert-info'>$message</div>"; } ?>
+    <form action="add-user.php" method="POST">
+      <div class="form-group">
+        <label for="cardno">Card Number</label>
+        <input type="text" id="cardno" name="cardno" class="form-control" required>
       </div>
-    </div>
+      <div class="form-group">
+        <label for="branch_id">Branch ID</label>
+        <input type="text" id="branch_id" name="branch_id" class="form-control" required>
+      </div>
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" class="form-control" required>
+      </div>
+      <div class="form-group">
+        <label for="address">Address</label>
+        <input type="text" id="address" name="address" class="form-control" required>
+      </div>
+      <div class="form-group">
+        <label for="phone_number">Phone Number</label>
+        <input type="text" id="phone_number" name="phone_number" class="form-control" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" class="form-control" required>
+      </div>
+      <div class="form-group">
+        <input type="submit" value="Add User" class="btn btn-primary">
+      </div>
+    </form>
   </div>
 </body>
 </html>

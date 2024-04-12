@@ -26,8 +26,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // Read the contents of the file
                 $admins = file('all-admins.txt', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
                 $newContent = array_filter($admins, function ($line) use ($employeeId) {
-                    // Check if the line does not contain the employeeId
-                    return !str_contains($line, $employeeId);
+                    // Split the line by commas and check if the first element matches the employee ID
+                    $parts = explode(",", $line);
+                    return $parts[0] !== $employeeId;
                 });
 
                 // Write the new contents back to the file

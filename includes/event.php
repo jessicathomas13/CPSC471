@@ -31,11 +31,10 @@ include('sqlconnect.php');
         <div class="row pad-botm">
             <div class="col-md-30">
               <div style = "text-align: right">
-              <h4 class="header-line"><a class="default-link-style <?php if($_SERVER["PHP_SELF"]=='add-book.php'){echo 'style-active';}?>"  href="add-book.php">Add Book</a></h4> 
-              <h4 class="header-line"><a class="default-link-style <?php if($_SERVER["PHP_SELF"]=='delete-book.php'){echo 'style-active';}?>"  href="delete-book.php">Delete Book</a></h4>
-              <h4 class="header-line"><a class="default-link-style <?php if($_SERVER["PHP_SELF"]=='admin-login.php'){echo 'style-active';}?>"  href="admin-login.php">Logout</a></h4>
-              <h4 class="header-line"><a class="default-link-style <?php if($_SERVER["PHP_SELF"]=='all-admins.php'){echo 'style-active';}?>"  href="all-admins.php">OUR ADMINS</a></h4>
-              <h4 class="header-line"><a class="default-link-style <?php if($_SERVER["PHP_SELF"]=='event.php'){echo 'style-active';}?>"  href="add-event.php">ADD EVENT</a></h4>
+              <h4 class="header-line"><a class="default-link-style <?php if($_SERVER["PHP_SELF"]=='index.php'){echo 'style-active';}?>"  href="index.php">Logout</a></h4>
+              <h4 class="header-line"><a class="default-link-style <?php if($_SERVER["PHP_SELF"]=='loan.php'){echo 'style-active';}?>"  href="loan.php">Borrowed books</a></h4>
+              <h4 class="header-line"><a class="default-link-style <?php if($_SERVER["PHP_SELF"]=='event.php'){echo 'style-active';}?>"  href="event.php">EVENTS</a></h4>
+              
             </div>
 
 </nav>

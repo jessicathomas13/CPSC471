@@ -35,6 +35,7 @@ include('sqlconnect.php');
               <h4 class="header-line"><a class="default-link-style <?php if($_SERVER["PHP_SELF"]=='delete-book.php'){echo 'style-active';}?>"  href="delete-book.php">Delete Book</a></h4>
               <h4 class="header-line"><a class="default-link-style <?php if($_SERVER["PHP_SELF"]=='admin-login.php'){echo 'style-active';}?>"  href="admin-login.php">Logout</a></h4>
               <h4 class="header-line"><a class="default-link-style <?php if($_SERVER["PHP_SELF"]=='all-admins.php'){echo 'style-active';}?>"  href="all-admins.php">OUR ADMINS</a></h4>
+              <h4 class="header-line"><a class="default-link-style <?php if($_SERVER["PHP_SELF"]=='users.php'){echo 'style-active';}?>"  href="users.php">OUR USERS</a></h4>
               <h4 class="header-line"><a class="default-link-style <?php if($_SERVER["PHP_SELF"]=='event.php'){echo 'style-active';}?>"  href="admin-event.php">EVENTS</a></h4>
               <h4 class="header-line"><a class="default-link-style <?php if($_SERVER["PHP_SELF"]=='publisher.php'){echo 'style-active';}?>"  href="publisher.php">PUBLISHERS</a></h4>
             </div>  

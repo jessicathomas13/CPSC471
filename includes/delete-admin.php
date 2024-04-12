@@ -8,64 +8,65 @@ $message = '';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $employeeId = $_POST["employee_id"];
+    $password = $_POST["password"];
 
-    // Begin transaction to ensure atomicity
-    mysqli_begin_transaction($con);
+    // Retrieve the password associated with the employee ID from the database
+    $query = "SELECT Password FROM admin WHERE EmpID = ?";
+    $stmt = $con->prepare($query);
+    $stmt->bind_param("s", $employeeId);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-    try {
-        // SQL query to delete an admin
-        $sql = "DELETE FROM admin WHERE EmpID = ?";
-        $stmt = mysqli_prepare($con, $sql);
-        mysqli_stmt_bind_param($stmt, "s", $employeeId);
+    if ($row = $result->fetch_assoc()) {
+        // Since we are working with plaintext passwords (which is not secure),
+        // we compare the passwords directly
+        if ($password === $row['Password']) {
+            // SQL query to delete an admin
+            $delete_query = "DELETE FROM admin WHERE EmpID = ?";
+            $delete_stmt = $con->prepare($delete_query);
+            $delete_stmt->bind_param("s", $employeeId);
+            $delete_stmt->execute();
 
-        // Execute and check if successful
-        if (mysqli_stmt_execute($stmt)) {
-            if (mysqli_affected_rows($con) > 0) {
+            if ($delete_stmt->affected_rows > 0) {
                 $message = "Admin deleted successfully.";
 
-                // Read the contents of the file
-                $admins = file('all-admins.txt', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+
+                // Update the all-admins.txt file
+                $admins = file('all-admins.txt', FILE_IGNORE_NEW_LINES);
                 $newContent = array_filter($admins, function ($line) use ($employeeId) {
-                    // Split the line by commas and check if the first element matches the employee ID
-                    $parts = explode(",", $line);
-                    return $parts[0] !== $employeeId;
+                    list($id) = explode(",", $line);
+                    return trim($id) !== $employeeId;
                 });
+                file_put_contents('all-admins.txt', implode("\n", $newContent));
 
-                // Write the new contents back to the file
-                file_put_contents('all-admins.txt', implode("\n", $newContent) . "\n");
-
-                // Commit the transaction
-                mysqli_commit($con);
-
-                // Redirect to all-admins page
+                // Redirect to the all-admins page
                 header("Location: all-admins.php");
-                exit();
+                exit;
             } else {
-                throw new Exception("No admin found with that ID.");
+                $message = "No admin found with that ID or unable to delete.";
             }
-        } else {
-            throw new Exception("Error deleting admin: " . mysqli_stmt_error($stmt));
-        }
 
-        mysqli_stmt_close($stmt);
-    } catch (Exception $e) {
-        // An exception has been thrown, rollback the transaction
-        mysqli_rollback($con);
-        $message = $e->getMessage();
+            $delete_stmt->close();
+        } else {
+            $message = "Incorrect password.";
+        }
+    } else {
+        $message = "No admin found with that ID.";
     }
+
+    $stmt->close();
 }
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Delete Admin</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" crossorigin="">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
         .card {
@@ -85,11 +86,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-6">
-                        <?php if (isset($message)) { echo "<div class='alert alert-info'>$message</div>"; } ?>
+                        <?php if (!empty($message)) { echo "<div class='alert alert-info'>$message</div>"; } ?>
                         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
                             <div class="form-group">
                                 <label for="employee_id">Employee ID:</label>
                                 <input type="text" id="employee_id" name="employee_id" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password:</label>
+                                <input type="password" id="password" name="password" class="form-control" required>
                             </div>
                             <div class="form-group">
                                 <input type="submit" value="Delete" class="btn btn-danger">
@@ -101,5 +106,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </div>
 </body>
-
 </html>

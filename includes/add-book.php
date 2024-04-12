@@ -60,6 +60,20 @@ border: 0px solid black!important;
                 <label for="">Genre</label>
                 <input type="text" name="genre" class="form-control">
               </div>
+
+              <div class="form-group">
+                <label for="">Author</label>
+                <select class="form-control" name="author" required="required">
+                <option value=""> Select Author</option>
+                <?php
+                   $sql = "SELECT * from  author ";
+                   $result = mysqli_query($con,$sql);
+                   while ($row = mysqli_fetch_assoc($result)){
+                    ?>
+                    <option value="<?php echo $row['Name'];?>"><?php echo $row['Name'];?></option>
+                    <?php } ?> 
+                </select>
+                </div>
               
               <div class="form-group">
                 <label for="">Publisher Name</label>
@@ -98,6 +112,7 @@ border: 0px solid black!important;
         $bkid = $_POST['bookid'];
         $bkname = $_POST['title'];
         $genre = $_POST['genre'];
+        $author =  $_POST['author'] ;
         $pbname =  $_POST['publishername'] ;
         $filename = $_FILES['bookimg']['name'];
         $name = "bookimg/" .$_FILES['bookimg']['name'];
@@ -107,7 +122,7 @@ border: 0px solid black!important;
             
 
         move_uploaded_file($_FILES['bookimg']['tmp_name'], "bookimg/".$filename);
-        $sql_query = "insert into book (bookid, genre, title, publishername, bookimg) values('$bkid', '$genre', '$bkname', '$pbname', '$filename')";
+        $sql_query = "insert into book (bookid, genre, title, publishername, bookimg) values('$bkid', '$genre', '$bkname', '$author', '$pbname', '$filename')";
 
         if (mysqli_query($con, $sql_query)) {
                   echo "<script>alert('Book Listed successfully');</script>";

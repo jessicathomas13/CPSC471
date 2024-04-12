@@ -33,7 +33,8 @@ include('sqlconnect.php');
             <div class="col-md-30">
               <div style = "text-align: right">
                 <h4 class="header-line"><a class="default-link-style <?php if($_SERVER["PHP_SELF"]=='index.php'){echo 'style-active';}?>"  href="index.php">Logout</a></h4>
-                <h4 class="header-line"><a class="default-link-style <?php if($_SERVER["PHP_SELF"]=='loan.php'){echo 'style-active';}?>"  href="loan.php">Borrowed books</a></h4>  
+                <h4 class="header-line"><a class="default-link-style <?php if($_SERVER["PHP_SELF"]=='loan.php'){echo 'style-active';}?>"  href="loan.php">Borrowed books</a></h4> 
+                <h4 class="header-line"><a class="default-link-style <?php if($_SERVER["PHP_SELF"]=='event.php'){echo 'style-active';}?>"  href="event.php">EVENTS</a></h4> 
     </div>  
             </div>
 

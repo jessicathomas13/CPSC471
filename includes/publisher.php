@@ -72,8 +72,8 @@ include('sqlconnect.php');
 <body>
     <nav class="navbar">
         <h1>Publishers</h1>
-        <a href="#" onclick="toggleDelete(true)">Delete Publisher</a>
         <a href="admin-dashboard.php">Home</a>
+        <a href="#" onclick="toggleDelete(true)">Delete Publisher</a>
         <a href="add-publisher.php">Add Publisher</a>
     </nav>
 

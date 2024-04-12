@@ -41,6 +41,7 @@ include('sqlconnect.php');
         width: 100%;
         height: 50px;
         box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+        border-radius: 0; /* Remove curvy edges */
       }
       .navbar h4, .navbar a {
         float: right;

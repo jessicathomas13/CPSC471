@@ -2,26 +2,30 @@
 session_start();
 error_reporting(0);
 include('sqlconnect.php');
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $empid = $_POST['empid'];
+    $password = $_POST['password'];
 
-  $empid = $_POST['empid'];
-  $password = $_POST['password'];
+    if ($empid != "" && $password != "") {
+        // Use prepared statement to prevent SQL Injection
+        $stmt = $con->prepare("SELECT COUNT(*) AS cntAdmin FROM admin WHERE empid=? AND password=?");
+        $stmt->bind_param("ss", $empid, $password); // 'ss' specifies the variable types => 'string', 'string'
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_array();
 
-  if ($empid != "" && $password != "") {
+        $count = $row['cntAdmin'];
 
-    $sql_query = "SELECT count(*) AS cntAdmin FROM admin WHERE empid='" . $empid . "' and password='" . $password . "'";
-    $result = mysqli_query($con, $sql_query);
-    $row = mysqli_fetch_array($result);
-
-    $count = $row['cntAdmin'];
-
-    if ($count > 0) {
-      $_SESSION['empid'] = $empid;
-      echo "<script type='text/javascript'> document.location ='admin-dashboard.php'; </script>";
-  } else{
-    echo "invalid";
-  }
-}
+        if ($count > 0) {
+            $_SESSION['empid'] = $empid;  // Store employee ID in session
+            echo "<script type='text/javascript'> document.location = 'admin-dashboard.php'; </script>";
+        } else {
+            echo "Invalid username or password";
+        }
+    } else {
+        echo "Please enter both username and password";
+    }
 }
 ?>
 

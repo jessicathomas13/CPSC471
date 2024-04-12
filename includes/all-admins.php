@@ -62,6 +62,7 @@
 
     <div class="navbar">
         <h1>Admin Management</h1>
+        <a href="admin-dashboard.php">Home</a>
         <a href="edit-admin.php">Edit Admin</a>
         <a href="delete-admin.php">Delete Admin</a>
         <a href="add-admin.php">Add Admin</a>

@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $delete_stmt->execute();
 
             if ($delete_stmt->affected_rows > 0) {
-                $message = "Admin deleted successfully.";
+                
 
 
                 // Update the all-admins.txt file
@@ -40,8 +40,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 file_put_contents('all-admins.txt', implode("\n", $newContent));
 
                 // Redirect to the all-admins page
-                header("Location: all-admins.php");
-                exit;
+                echo "<script>alert('Admin deleted successfully!');</script>";
+                echo "<script>window.location.href='all-admins.php'</script>";
             } else {
                 $message = "No admin found with that ID or unable to delete.";
             }

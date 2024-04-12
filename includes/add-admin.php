@@ -25,9 +25,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $newAdminDetails = $employeeId . "," . $name . "," . $branchId . "\n";
             file_put_contents($filename, $newAdminDetails, FILE_APPEND);
 
-            $message = "Admin added successfully! You will be redirected shortly.";
-            header("Refresh: 3; URL=all-admins.php");
-            exit;
+            echo "<script>alert('Admin added successfully!');</script>";
+            echo "<script>window.location.href='all-admins.php'</script>";
         } else {
             $message = "Error: " . $sql_query . "<br>" . mysqli_error($con);
         }

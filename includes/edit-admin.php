@@ -1,5 +1,7 @@
 <?php
 session_start();
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 include('sqlconnect.php');
 
 // Redirect if not logged in
@@ -17,7 +19,7 @@ if (isset($_GET['employee_id']) && $_GET['employee_id'] != $_SESSION['empid']) {
 }
 
 $empid = $_SESSION['empid'];  // Fetch admin details for the logged-in user
-$name = $branchid = "";
+$name = $branchid = $email = "";
 
 $query = "SELECT * FROM admin WHERE EmpID = ?";
 $stmt = $con->prepare($query);
@@ -27,6 +29,7 @@ $result = $stmt->get_result();
 if ($admin = $result->fetch_assoc()) {
     $name = $admin['Name'];
     $branchid = $admin['BranchID'];
+    $email = $admin['EmailID'];
 } else {
     $message = "Admin not found.";
 }
@@ -35,26 +38,15 @@ if ($admin = $result->fetch_assoc()) {
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $empid = $_POST['empid'];
     $name = $_POST['name'];
+    $email = $_POST['email'];
 
     if ($empid == $_SESSION['empid']) {
-        $updateQuery = "UPDATE admin SET EmpID=?, Name=? WHERE EmpID=?";
+        $updateQuery = "UPDATE admin SET EmpID=?, Name=?, EmailID=? WHERE EmpID=?";
         $stmt = $con->prepare($updateQuery);
-        $stmt->bind_param("sss", $empid, $name, $_SESSION['empid']);
+        $stmt->bind_param("ssss", $empid, $name, $email, $_SESSION['empid']);
         if ($stmt->execute()) {
-            // Also update the all-admins.txt file
-            $lines = file('all-admins.txt');
-            foreach ($lines as $key => $line) {
-                list($fileEmpId) = explode(',', $line);
-                if (trim($fileEmpId) == $_SESSION['empid']) {
-                    $lines[$key] = "$empid,$name,$branchid\n";  // Keep the branch ID unchanged
-                    break;
-                }
-            }
-            file_put_contents('all-admins.txt', implode("", $lines));
-            $message = "Admin updated successfully. You will be redirected shortly";
-            echo $message;
-            header("Refresh: 2; URL=all-admins.php");
-            exit;
+            $message = "Admin details updated successfully.";
+            header("refresh:1; url=all-admins.php");
             $_SESSION['empid'] = $empid;  // Update the session if the Employee ID changes
         } else {
             $message = "Error updating admin: " . $stmt->error;
@@ -113,6 +105,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="form-group">
             <label for="name">Name:</label>
             <input type="text" class="form-control" id="name" name="name" value="<?php echo htmlspecialchars($name); ?>" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" class="form-control" id="email" name="email" value="<?php echo htmlspecialchars($email); ?>" required>
         </div>
         <button type="submit" class="btn btn-primary">Update</button>
     </form>

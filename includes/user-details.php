@@ -7,7 +7,6 @@ if (!isset($_SESSION['empid'])) {
     header("Location: login.php");
     exit;
 }
-
 // Get the card number from the URL
 $cardno = isset($_GET['cardno']) ? $_GET['cardno'] : '';
 

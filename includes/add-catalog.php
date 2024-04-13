@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sql_query = "insert into catalog values('$catalogid', '$branchId', '$bookId', '$copies', '$location')";
 
     if (mysqli_query($con, $sql_query)) {
-              echo "<script>alert('Catlog updated successfully!');</script>";
+              echo "<script>alert('Catalog updated successfully!');</script>";
         echo "<script>window.location.href='admin-catalogs.php'</script>";}
     else {
               echo "Error: " . $sql_query . "<br>" . mysqli_error($con);	}

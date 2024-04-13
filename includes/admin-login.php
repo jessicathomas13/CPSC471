@@ -71,7 +71,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <div class="form-group">
 <label>Password</label>
 <input class="form-control" type="password" name="password" required autocomplete="off"  />
-<p class="help-block"><a href="user-forgot-password.php">Forgot Password</a></p>
+<p class="help-block"><a href="admin-forgot-password.php">Forgot Password</a></p>
 </div>
 
 

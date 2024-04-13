@@ -122,7 +122,7 @@ border: 0px solid black!important;
             
 
         move_uploaded_file($_FILES['bookimg']['tmp_name'], "bookimg/".$filename);
-        $sql_query = "insert into book (bookid, genre, title, publishername, bookimg) values('$bkid', '$genre', '$bkname', '$author', '$pbname', '$filename')";
+        $sql_query = "insert into book (bookid, genre, title, authorname, publishername, bookimg) values('$bkid', '$genre', '$bkname', '$author', '$pbname', '$filename')";
 
         if (mysqli_query($con, $sql_query)) {
                   echo "<script>alert('Book Listed successfully');</script>";

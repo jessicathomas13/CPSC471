@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 13, 2024 at 07:28 PM
+-- Generation Time: Apr 13, 2024 at 07:40 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -89,15 +89,15 @@ CREATE TABLE `book` (
 --
 
 INSERT INTO `book` (`BookID`, `Genre`, `Title`, `AuthorName`, `PublisherName`, `bookIMG`, `BranchID`) VALUES
-('1098', 'Science Fiction', '1984', 'George Orwell', 'Penguin Books', 'george-orwell-1984.jpg', 0),
-('2314', 'Adventure', 'Treasure Island', 'Robert Louis Stevenson', 'Simon & Schuster', 'treasureisland.jpg', 0),
-('3237', 'Children\'s Literature', 'Charlotte\'s Web', 'E.B. White', 'HarperCollins', 'charlotte-web.jpg', 0),
-('3794', 'Romance', 'Pride and Prejudice', 'Jane Austen', 'Dover Publications', 'pride.jpg', 0),
-('4516', 'Mystery', 'A Study in Scarlet', 'Arthur Conan Doyle', 'East India Publishing Company ', 'AStudyinScarlet-01.jpg', 0),
-('5928', 'Computer Science', 'Haskell: The Craft of Functional Programming', 'Simon Thompson', 'Addison Wesley', 'haskell.jpg', 0),
-('6831', 'Science Fiction', 'Dune', 'Frank Herbert', 'Penguin Books', 'dune.jpg', 0),
-('7182', 'Computer Science', 'Fundamentals of Database Systems', 'Ramez Elmasri', 'Pearson', 'fundamentals.jpg', 0),
-('8293', 'Horror', 'Dracula', 'Bram Stoker', 'Simon & Schuster', 'dracula.jpg', 0);
+('1098', 'Science Fiction', '1984', 'George Orwell', 'Penguin Books', 'george-orwell-1984.jpg', 32),
+('2314', 'Adventure', 'Treasure Island', 'Robert Louis Stevenson', 'Simon & Schuster', 'treasureisland.jpg', 32),
+('3237', 'Children\'s Literature', 'Charlotte\'s Web', 'E.B. White', 'HarperCollins', 'charlotte-web.jpg', 32),
+('3794', 'Romance', 'Pride and Prejudice', 'Jane Austen', 'Dover Publications', 'pride.jpg', 32),
+('4516', 'Mystery', 'A Study in Scarlet', 'Arthur Conan Doyle', 'East India Publishing Company ', 'AStudyinScarlet-01.jpg', 32),
+('5928', 'Computer Science', 'Haskell: The Craft of Functional Programming', 'Simon Thompson', 'Addison Wesley', 'haskell.jpg', 32),
+('6831', 'Science Fiction', 'Dune', 'Frank Herbert', 'Penguin Books', 'dune.jpg', 32),
+('7182', 'Computer Science', 'Fundamentals of Database Systems', 'Ramez Elmasri', 'Pearson', 'fundamentals.jpg', 32),
+('8293', 'Horror', 'Dracula', 'Bram Stoker', 'Simon & Schuster', 'dracula.jpg', 32);
 
 -- --------------------------------------------------------
 
@@ -261,7 +261,7 @@ ALTER TABLE `book`
   ADD PRIMARY KEY (`BookID`),
   ADD KEY `author` (`AuthorName`),
   ADD KEY `publisher` (`PublisherName`),
-  ADD KEY `BranchID` (`BranchID`);
+  ADD KEY `bbid` (`BranchID`);
 
 --
 -- Indexes for table `branch`
@@ -321,6 +321,7 @@ ALTER TABLE `admin`
 --
 ALTER TABLE `book`
   ADD CONSTRAINT `author` FOREIGN KEY (`AuthorName`) REFERENCES `author` (`Name`),
+  ADD CONSTRAINT `bbid` FOREIGN KEY (`BranchID`) REFERENCES `branch` (`BranchID`),
   ADD CONSTRAINT `publisher` FOREIGN KEY (`PublisherName`) REFERENCES `publisher` (`Name`);
 
 --

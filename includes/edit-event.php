@@ -62,13 +62,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <input type="text" class="form-control" name="eventname" value="<?php echo htmlspecialchars($eventDetails['EventName']); ?>" required>
             </div>
             <div class="form-group">
-                <label>Branch ID:</label>
-                <select class="form-control" name="branch" required>
-                    <?php while ($branchid = mysqli_fetch_assoc($branch)) {
-                        echo "<option value='" . htmlspecialchars($branch['BranchID']) . "'" . ($branch['BranchID'] == $eventDetails['BranchID'] ? ' selected' : '') . ">" . htmlspecialchars($branch['BranchID']) . "</option>";
-                    } ?>
-                </select>
-            </div>
+                                <label for="">Branch ID:</label>
+                                <select class="form-control" name="publishername" required="required">
+                                    <option value="">Select BranchID</option>
+                                    <?php
+                                    $sql = "SELECT * FROM branch";
+                                    $result = mysqli_query($con, $sql);
+                                    while ($row = mysqli_fetch_assoc($result)) {
+                                        ?>
+                                        <option value="<?php echo $row['Name']; ?>"><?php echo $row['Name']; ?></option>
+                                    <?php } ?>
+                                </select>
+                            </div>
             <div class="form-group">
                 <label>Date:</label>
                 <input type="datetime-local" class="form-control" name="date" value="<?php echo htmlspecialchars($eventDetails['Date']); ?>" required>

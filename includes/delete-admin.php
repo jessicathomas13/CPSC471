@@ -28,17 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $delete_stmt->execute();
 
             if ($delete_stmt->affected_rows > 0) {
-                
-
-
-                // Update the all-admins.txt file
-                $admins = file('all-admins.txt', FILE_IGNORE_NEW_LINES);
-                $newContent = array_filter($admins, function ($line) use ($employeeId) {
-                    list($id) = explode(",", $line);
-                    return trim($id) !== $employeeId;
-                });
-                file_put_contents('all-admins.txt', implode("\n", $newContent));
-
+                                
                 // Redirect to the all-admins page
                 echo "<script>alert('Admin deleted successfully!');</script>";
                 echo "<script>window.location.href='all-admins.php'</script>";

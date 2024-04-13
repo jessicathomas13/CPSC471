@@ -9,7 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = $_POST["name"];
     $branchId = $_POST["branch_id"];
     $password = $_POST["password"];
-    $filename = "all-admins.txt";
+
 
     // Check if the employee ID already exists in the database
     $sql_check = "SELECT * FROM admin WHERE EmpID = '$employeeId'";
@@ -21,9 +21,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $sql_query = "INSERT INTO admin VALUES ('$name', '$employeeId', '$branchId', '$password')";
 
         if (mysqli_query($con, $sql_query)) {
-            // Append the new admin details to the all-admins.txt file
-            $newAdminDetails = $employeeId . "," . $name . "," . $branchId . "\n";
-            file_put_contents($filename, $newAdminDetails, FILE_APPEND);
 
             echo "<script>alert('Admin added successfully!');</script>";
             echo "<script>window.location.href='all-admins.php'</script>";

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 12, 2024 at 04:11 AM
+-- Generation Time: Apr 13, 2024 at 02:09 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -136,11 +136,18 @@ CREATE TABLE `copy` (
 --
 
 CREATE TABLE `event` (
-  `Event ID` int(100) NOT NULL,
+  `EventID` int(100) NOT NULL,
   `BranchID` int(100) NOT NULL,
   `Date` varchar(100) NOT NULL,
   `Description` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `event`
+--
+
+INSERT INTO `event` (`EventID`, `BranchID`, `Date`, `Description`) VALUES
+(2332, 32, '04-20-24', 'Calligraphy class');
 
 -- --------------------------------------------------------
 
@@ -182,6 +189,7 @@ CREATE TABLE `publisher` (
 INSERT INTO `publisher` (`Name`, `Address`, `Phone`) VALUES
 ('Dover Publications', '1325 Franklin Ave, Ste 250, Garden City, NY 11530', '+1 (516) 742-50'),
 ('East India Publishing Company ', 'Ottawa, ON, Canada.', '+1 (613) 567-463'),
+('jojoisugly', '333', '+1(402) 268-4024'),
 ('Simon & Schuster', '166 King Street East, Suite 300. Toronto, ON', '+1 (647) 427-88');
 
 -- --------------------------------------------------------
@@ -191,7 +199,7 @@ INSERT INTO `publisher` (`Name`, `Address`, `Phone`) VALUES
 --
 
 CREATE TABLE `user` (
-  `Cardno` varchar(100) NOT NULL,
+  `Cardno` int(100) NOT NULL,
   `BranchID` int(100) NOT NULL,
   `Name` varchar(100) NOT NULL,
   `Address` varchar(100) NOT NULL,
@@ -205,8 +213,8 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`Cardno`, `BranchID`, `Name`, `Address`, `Phone no.`, `Password`, `Status`) VALUES
-('38493', 32, 'abc', 'dkjwkblw', '37882773', 'abc123', 1),
-('56', 32, 'jj', 'enjkbd', '37283000', 'lol', 1);
+(56, 32, 'jj', 'enjkbd', '37283000', 'lol', 1),
+(38493, 32, 'abc', 'dkjwkblw', '37882773', 'abc123', 1);
 
 --
 -- Indexes for dumped tables
@@ -243,6 +251,7 @@ ALTER TABLE `branch`
 -- Indexes for table `catalog`
 --
 ALTER TABLE `catalog`
+  ADD PRIMARY KEY (`Catalog Name`),
   ADD KEY `branchid2` (`BranchID`);
 
 --
@@ -256,6 +265,7 @@ ALTER TABLE `copy`
 -- Indexes for table `event`
 --
 ALTER TABLE `event`
+  ADD PRIMARY KEY (`EventID`),
   ADD KEY `BRANCH` (`BranchID`);
 
 --
@@ -264,7 +274,8 @@ ALTER TABLE `event`
 ALTER TABLE `loan`
   ADD PRIMARY KEY (`Loan date`),
   ADD KEY `loan_branch_id` (`BranchID`),
-  ADD KEY `loan_book_id` (`BookID`);
+  ADD KEY `loan_book_id` (`BookID`),
+  ADD KEY `cardno` (`Cardno`);
 
 --
 -- Indexes for table `publisher`
@@ -319,6 +330,7 @@ ALTER TABLE `event`
 -- Constraints for table `loan`
 --
 ALTER TABLE `loan`
+  ADD CONSTRAINT `cardno` FOREIGN KEY (`Cardno`) REFERENCES `user` (`Cardno`),
   ADD CONSTRAINT `loan_book_id` FOREIGN KEY (`BookID`) REFERENCES `book` (`BookID`),
   ADD CONSTRAINT `loan_branch_id` FOREIGN KEY (`BranchID`) REFERENCES `branch` (`BranchID`);
 

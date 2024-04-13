@@ -3,103 +3,105 @@ session_start();
 error_reporting(0);
 include('sqlconnect.php');
 
+$publishers = [];  
+
+
+$query = "SELECT * FROM publisher"; 
+$stmt = $con->prepare($query);
+$stmt->execute();
+$result = $stmt->get_result();
+
+
+while ($row = $result->fetch_assoc()) {
+    $publishers[] = $row;
+}
 ?>
-
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Publisher Management</title>
-    <link rel="stylesheet" href="assets/bootstrap.css">
-    <link rel="stylesheet" href="assets/font-awesome.css">
-    <script>
-        function toggleDelete(shouldShow) {
-            const checkboxes = document.querySelectorAll('.delete-checkbox');
-            const deleteBtn = document.getElementById('delete-btn');
-            checkboxes.forEach(cb => cb.style.display = shouldShow ? 'block' : 'none');
-            deleteBtn.style.display = shouldShow ? 'block' : 'none';
-        }
-
-        function confirmDeletion() {
-            const checkedBoxes = document.querySelectorAll('.delete-checkbox:checked');
-            return checkedBoxes.length > 0 ? confirm('Are you sure you want to delete the selected publishers?') : false;
-        }
-    </script>
     <style>
-      body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding-top: 60px;
-      }
-      .navbar {
-        background-color: #333;
-        overflow: hidden;
-        position: fixed;
-        top: 0;
-        width: 100%;
-        height: 50px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.4);
-        border-radius: 0; /* Remove curvy edges */
-      }
-      .navbar h4, .navbar a {
-        float: right;
-        display: block;
-        color: #f2f2f2;
-        text-align: center;
-        padding: 14px 16px;
-        text-decoration: none;
-        transition: background-color 0.3s;
-      }
-      .navbar h4:hover, .navbar a:hover {
-        background-color: #ddd;
-        color: black;
-      }
-      .navbar h1 {
-        float: left;
-        color: #f2f2f2;
-        text-align: center;
-        padding: 10px 16px;
-        font-size: 24px;
-        margin: 0;
-      }
-      .delete-checkbox, #delete-btn {
-            display: none; /* Hide checkboxes and delete button by default */
-            margin-top: 10px;
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding-top: 60px; /* Space for the fixed navbar */
+        }
+        .navbar {
+            background-color: #333;
+            overflow: hidden;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 50px; /* Slim navbar height */
+            box-shadow: 0 2px 4px rgba(0,0,0,0.4); /* Shadow for depth */
+        }
+        .navbar a {
+            float: right;
+            display: block;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            transition: background-color 0.3s; /* Transition for hover effect */
+        }
+        .navbar a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+        .navbar h1 {
+            float: left;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 10px 16px;
+            font-size: 24px; /* Font size for title */
+            margin: 0; /* Remove default margin */
+        }
+        .publisher-list {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 20px; /* Space below table */
+        }
+        .publisher-list th, .publisher-list td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        .publisher-list th {
+            background-color: #f2f2f2;
+        }
+        .publisher-list tr:nth-child(even) {
+            background-color: #f9f9f9;
         }
     </style>
 </head>
 <body>
-    <nav class="navbar">
-        <h1>Publishers</h1>
-        <a href="admin-dashboard.php">Home</a>
-        <a href="#" onclick="toggleDelete(true)">Delete Publisher</a>
-        <a href="add-publisher.php">Add Publisher</a>
-    </nav>
 
-    <div class="content-wrapper">
-        <div class="container">
-            <div class="row pad-botm">
-                <div class="col-md-12">
-                    <form method="POST" action="delete-publisher.php" onsubmit="return confirmDeletion();">
-                      <?php
-                        $sql = "SELECT * FROM publisher";
-                        $result = mysqli_query($con, $sql);
-                        
-                        while ($row = mysqli_fetch_assoc($result)) { ?>
-                            <div class="col-md-4" style="float:left; height:300px;">
-                                <b><?php echo $row['Name'];?></b><br />
-                                <?php echo $row['Address'];?><br />
-                                <?php echo $row['Phone'];?><br />
-                                <input type="checkbox" class="delete-checkbox" name="delete_ids[]" value="<?php echo $row['ID']; ?>"><br>
-                            </div>
-                        <?php } ?>
-                        <button type="submit" id="delete-btn" class="btn btn-danger">Delete Selected</button>
-                    </form>
-                </div>
-            </div>
-        </div>
+    <div class="navbar">
+        <h1>Publisher Management</h1>
+        <a href="admin-dashboard.php">Home</a>
+        <a href="edit-publisher.php">Edit Publisher</a>
+        <a href="delete-publisher.php">Delete Publisher</a>
+        <a href="add-publisher.php">Add Publisher</a>       
     </div>
+
+<div class="content">
+    <h2>Publisher List</h2>
+    <table class="publisher-list">
+        <tr>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Phone number</th>
+        
+        </tr>
+        <?php foreach ($publishers as $publisher): ?>
+            <tr>
+                <td><?= htmlspecialchars($publisher['Name']); ?></td>
+                <td><?= htmlspecialchars($publisher['Address']); ?></td>
+                <td><?= htmlspecialchars($publisher['Phone']); ?></td>
+            </tr>
+        <?php endforeach; ?>
+    </table>
+</div>
+
 </body>
 </html>

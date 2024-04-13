@@ -2,15 +2,15 @@
 session_start();
 include('sqlconnect.php');
 
-// Check if the user is logged in, otherwise redirect to login page
+// Check if the admin is logged in, otherwise redirect to login page
 if (!isset($_SESSION['empid'])) {
-    header("Location: login.php");
+    header("Location: admin-login.php");
     exit;
 }
 
-$users = [];  // Array to hold user data
+$users = [];  // Array to hold admin data
 
-// SQL query to fetch all user data
+// SQL query to fetch all admin data
 $query = "SELECT * FROM admin"; // Modify with your actual table columns
 $stmt = $con->prepare($query);
 $stmt->execute();

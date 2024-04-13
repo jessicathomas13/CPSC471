@@ -10,6 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = $_POST["name"];
     $address = $_POST["address"];
     $phoneNumber = $_POST["phone_number"];
+    $email = $_POST["email"]; // Add email field
     $password = $_POST["password"]; // If users have a password
     $status = 1;
 
@@ -20,9 +21,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (mysqli_num_rows($result_check) > 0) {
         $message = "Card number already exists in the database.";
     } else {
-        $sql_insert = "INSERT INTO user (Cardno, BranchID, Name, Address, `Phone no.`, Password, Status) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $sql_insert = "INSERT INTO user (Cardno, BranchID, Name, Address, `Phone no.`, EmailID, Password, Status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $con->prepare($sql_insert);
-        $stmt->bind_param("ssssssi", $cardno, $branchId, $name, $address, $phoneNumber, $password, $status);
+        $stmt->bind_param("sssssssi", $cardno, $branchId, $name, $address, $phoneNumber, $email, $password, $status);
 
         if ($stmt->execute()) {
             $message = "User added successfully! You will be redirected shortly.";
@@ -97,6 +98,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       <div class="form-group">
         <label for="phone_number">Phone Number</label>
         <input type="text" id="phone_number" name="phone_number" class="form-control" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label> <!-- Add email field -->
+        <input type="email" id="email" name="email" class="form-control" required>
       </div>
       <div class="form-group">
         <label for="password">Password</label>

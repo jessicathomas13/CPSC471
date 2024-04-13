@@ -11,11 +11,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $new_name = $_POST['name'];
     $new_address = $_POST['address'];
     $new_phone_number = $_POST['phone_number'];
+    $new_email = $_POST['email'];
 
     // Prepare the update query
-    $updateQuery = "UPDATE user SET Name=?, Address=?, `Phone no.`=? WHERE Cardno=?";
+    $updateQuery = "UPDATE user SET Name=?, Address=?, `Phone no.`=?, EmailID=? WHERE Cardno=?";
     $stmt = $con->prepare($updateQuery);
-    $stmt->bind_param("ssss", $new_name, $new_address, $new_phone_number, $cardno);
+    $stmt->bind_param("sssss", $new_name, $new_address, $new_phone_number, $new_email, $cardno);
     
     $stmt->execute();
     
@@ -38,7 +39,7 @@ if (isset($_GET['cardno'])) {
     $cardno = $_GET['cardno'];
 
     // Fetch user details for the specified card number
-    $query = "SELECT * FROM user WHERE Cardno = ?";
+    $query = "SELECT Name, Address, `Phone no.`, EmailID FROM user WHERE Cardno = ?";
     $stmt = $con->prepare($query);
     $stmt->bind_param("s", $cardno);
     $stmt->execute();
@@ -47,6 +48,7 @@ if (isset($_GET['cardno'])) {
         $name = $user['Name'];
         $address = $user['Address'];
         $phone_number = $user['Phone no.'];
+        $email = $user['EmailID'];
     } else {
         $message = "User not found.";
     }
@@ -97,7 +99,17 @@ if (isset($_GET['cardno'])) {
     <form method="POST">
         <div class="form-group">
             <label for="cardno">Card Number:</label>
-            <input type="text" class="form-control" id="cardno" name="cardno" value="<?php echo htmlspecialchars($cardno); ?>" required>
+            <!-- Dropdown to select card number -->
+            <select class="form-control" id="cardno" name="cardno" onchange="fetchUserData(this.value)" required>
+                <option value="">Select Card Number</option>
+                <?php
+                $query = "SELECT DISTINCT Cardno FROM user";
+                $result = $con->query($query);
+                while ($row = $result->fetch_assoc()) {
+                    echo "<option value='".$row['Cardno']."'>".$row['Cardno']."</option>";
+                }
+                ?>
+            </select>
         </div>
         <div class="form-group">
             <label for="name">Name:</label>
@@ -111,8 +123,37 @@ if (isset($_GET['cardno'])) {
             <label for="phone_number">Phone Number:</label>
             <input type="text" class="form-control" id="phone_number" name="phone_number" value="<?php echo htmlspecialchars($phone_number); ?>" required>
         </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" class="form-control" id="email" name="email" value="<?php echo htmlspecialchars($email); ?>" required>
+        </div>
         <button type="submit" class="btn btn-primary">Update</button>
     </form>
 </div>
+
+<script>
+    function fetchUserData(cardno) {
+        // AJAX request to fetch user data based on card number
+        if (cardno !== "") {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    var userData = JSON.parse(this.responseText);
+                    if (userData.error) {
+                        alert(userData.error); // Display error message if any
+                    } else {
+                        document.getElementById("name").value = userData.Name;
+                        document.getElementById("address").value = userData.Address;
+                        document.getElementById("phone_number").value = userData['Phone no.'];
+                        document.getElementById("email").value = userData.EmailID;
+                    }
+                }
+            };
+            xhttp.open("GET", "fetch-user-data.php?cardno=" + cardno, true);
+            xhttp.send();
+        }
+    }
+</script>
+
 </body>
 </html>

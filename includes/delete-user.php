@@ -11,9 +11,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST["password"]; // Assuming users have a password
 
     // First, we check if the card number exists
-    $query = "SELECT Password FROM user WHERE Cardno = ?";
+    $query = "SELECT Password FROM admin WHERE Password = ?";
     $stmt = $con->prepare($query);
-    $stmt->bind_param("s", $cardno);
+    $stmt->bind_param("s", $password);
     $stmt->execute();
     $result = $stmt->get_result();
 

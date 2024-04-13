@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 13, 2024 at 07:40 PM
+-- Generation Time: Apr 13, 2024 at 10:08 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -40,7 +40,7 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`Name`, `EmpID`, `BranchID`, `Password`, `EmailID`) VALUES
-('john', 33, 32, 'loll', '');
+('john', 33, 32, 'loll', 'john@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -128,7 +128,7 @@ INSERT INTO `branch` (`BranchID`, `Branch Name`, `Address`) VALUES
 --
 
 CREATE TABLE `catalog` (
-  `Catalog Name` varchar(100) NOT NULL,
+  `CatalogID` int(250) NOT NULL,
   `BranchID` int(100) NOT NULL,
   `BookID` varchar(100) NOT NULL,
   `Num_of_copies` int(250) NOT NULL,
@@ -139,8 +139,8 @@ CREATE TABLE `catalog` (
 -- Dumping data for table `catalog`
 --
 
-INSERT INTO `catalog` (`Catalog Name`, `BranchID`, `BookID`, `Num_of_copies`, `Book Location`) VALUES
-('Calgary Public Library Catalog', 32, '4516', 2, 'G-6');
+INSERT INTO `catalog` (`CatalogID`, `BranchID`, `BookID`, `Num_of_copies`, `Book Location`) VALUES
+(1, 32, '4516', 2, 'G-6');
 
 -- --------------------------------------------------------
 
@@ -234,8 +234,8 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`Cardno`, `BranchID`, `Name`, `Address`, `Phone no.`, `Password`, `Status`, `EmailID`) VALUES
-(56, 32, 'jj', 'enjkbd', '37283000', 'lol', 1, ''),
-(38493, 32, 'abc', 'dkjwkblw', '37882773', 'abc123', 1, '');
+(56, 32, 'jj', 'enjkbd', '37283000', 'lol', 1, 'jj@gmail.com'),
+(38493, 32, 'abc', 'dkjwkblw', '37882773', 'abc123', 1, 'abc@gmail.com');
 
 --
 -- Indexes for dumped tables
@@ -273,7 +273,7 @@ ALTER TABLE `branch`
 -- Indexes for table `catalog`
 --
 ALTER TABLE `catalog`
-  ADD PRIMARY KEY (`Catalog Name`),
+  ADD PRIMARY KEY (`CatalogID`),
   ADD KEY `branchid2` (`BranchID`),
   ADD KEY `book_ID` (`BookID`);
 
@@ -305,6 +305,16 @@ ALTER TABLE `publisher`
 ALTER TABLE `user`
   ADD PRIMARY KEY (`Cardno`),
   ADD KEY `branchid` (`BranchID`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `catalog`
+--
+ALTER TABLE `catalog`
+  MODIFY `CatalogID` int(250) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables

@@ -88,7 +88,7 @@ include('sqlconnect.php');
     $result = mysqli_query($con, $sql);
     while ($row = mysqli_fetch_assoc($result)) { ?>
       <div class="col-md-4 mb-4">
-        <div class="card book-card h-100" onclick="window.location.href='about-book.php?bookID=<?php echo $row['BookID']; ?>'">
+        <div class="card book-card h-100" onclick="window.location.href='user-about-book.php?bookID=<?php echo $row['BookID']; ?>'">
           <img src="bookimg/<?php echo htmlspecialchars($row['bookIMG']); ?>" class="card-img-top" alt="Book Image">
           <div class="card-body">
             <h5 class="card-title"><?php echo htmlspecialchars($row['Title']); ?></h5>

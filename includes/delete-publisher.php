@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // SQL query to delete an admin
             $deleteSql = "DELETE FROM publisher WHERE Name = ?";
             $deleteStmt = mysqli_prepare($con, $deleteSql);
-            mysqli_stmt_bind_param($deleteStmt, "s", $bookId);
+            mysqli_stmt_bind_param($deleteStmt, "s", $publisher);
             
             if (mysqli_stmt_execute($deleteStmt)) {
                 echo "<script>alert('Publisher deleted successfully!');</script>";
@@ -70,11 +70,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <?php if (isset($message)) { echo "<div class='alert alert-info'>$message</div>"; } ?>
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
                     <div class="form-group">
-                    <label for="">Author</label>
-                    <select class="form-control" name="author" required="required">
-                    <option value=""> Select Author</option>
+                    <label for="publisher">Publisher</label>
+                    <select class="form-control" name="publisher" required="required">
+                    <option value=""> Select Publisher</option>
                     <?php
-                    $sql = "SELECT * from  author ";
+                    $sql = "SELECT * from  publisher ";
                     $result = mysqli_query($con,$sql);
                     while ($row = mysqli_fetch_assoc($result)){
                         ?>
@@ -82,7 +82,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <?php } ?> 
                     </select>
                     </div>
-                        
+                    <div class="form-group">
+                                <input type="submit" value="Delete" class="btn btn-danger">
+                            </div>
                     </form>
                 </div>
             </div>

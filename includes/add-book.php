@@ -85,6 +85,19 @@ border: 0px solid black!important;
                                     <?php } ?>
                                 </select>
                             </div>
+                            <div class="form-group">
+                            <label for="">Branch:</label>
+                            <select class="form-control" name="branchid" required="required">
+                                <option value="">Select Branch</option>
+                                <?php
+                                $sql = "SELECT * FROM branch";
+                                $result = mysqli_query($con, $sql);
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                    ?>
+                                    <option value="<?php echo $row['BranchID']; ?>"><?php echo $row['Branch Name']; ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
 
                             <div class="form-group">
                                 <label>Book Image<span style="color:red;">*</span></label>
@@ -105,6 +118,7 @@ border: 0px solid black!important;
                             $genre = $_POST['genre'];
                             $author = $_POST['author'];
                             $pbname = $_POST['publishername'];
+                            $branchid = $_POST['branchid'];
                             $filename = $_FILES['bookimg']['name'];
                             $tmp_name = $_FILES['bookimg']['tmp_name'];
 
@@ -121,7 +135,7 @@ border: 0px solid black!important;
                                     // Upload file
                                   if (move_uploaded_file($_FILES["bookimg"]["tmp_name"], $target_file)) {
                                         // File uploaded successfully, insert data into database
-                                        $sql_query = "INSERT INTO book (bookid, genre, title, authorname, publishername, bookimg) VALUES ('$bkid', '$genre', '$bkname', '$author', '$pbname', '$filename')";
+                                        $sql_query = "INSERT INTO book (bookid, genre, title, authorname, publishername, bookimg, branchid) VALUES ('$bkid', '$genre', '$bkname', '$author', '$pbname', '$filename', '$branchid')";
                                         if (mysqli_query($con, $sql_query)) {
                                             echo "<script>alert('Book Listed successfully');</script>";
                                             echo "<script>window.location.href='admin-dashboard.php'</script>";

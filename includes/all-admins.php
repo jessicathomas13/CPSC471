@@ -96,13 +96,14 @@ while ($row = $result->fetch_assoc()) {
             <th>Name</th>
             <th>Employee ID</th>
             <th>Branch ID</th>
-        
+            <th>Email</th> <!-- New column for Email -->
         </tr>
         <?php foreach ($admins as $admin): ?>
             <tr>
                 <td><?= htmlspecialchars($admin['Name']); ?></td>
                 <td><?= htmlspecialchars($admin['EmpID']); ?></td>
                 <td><?= htmlspecialchars($admin['BranchID']); ?></td>
+                <td><?= htmlspecialchars($admin['EmailID']); ?></td> <!-- Display email ID -->
             </tr>
         <?php endforeach; ?>
     </table>

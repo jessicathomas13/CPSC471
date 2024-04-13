@@ -16,7 +16,7 @@ if ($event) {
 }
 
 if (!$eventDetails) {
-    echo "<script>alert('No event found with this ID.'); window.location.href='dashboard.php';</script>";
+    echo "<script>alert('No event found with this ID.'); window.location.href='admin-event.php';</script>";
     exit;
 }
 
@@ -86,8 +86,8 @@ if (!$eventDetails) {
             <p><strong>Description:</strong> <?php echo htmlspecialchars($eventDetails['Description']); ?></p>
             <p><strong>Date:</strong> <?php echo htmlspecialchars($eventDetails['Date']); ?></p>
         </div>
-
-        <a href="event.php" class="btn btn-primary edit-button">Return to Events</a>
+        <a href="edit-event.php?EventID=<?php echo $EventID; ?>" class="btn btn-primary edit-button">Edit Event Details</a>
+        <a href="admin-event.php" class="btn btn-primary edit-button">Return to Events</a>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

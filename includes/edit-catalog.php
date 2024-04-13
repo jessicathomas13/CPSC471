@@ -3,22 +3,15 @@ session_start();
 error_reporting(E_ALL);
 include('sqlconnect.php');
 
-$catalog_id = isset($_GET['catalog_id']) ? $_GET['catalog_id'] : '';
-$row = ['BranchID' => '', 'BookID' => '', 'Num_of_copies' => '', 'Book Location' => ''];
+
 
 // Fetch catalog details based on catalog ID
-if ($catalog_id) {
-    $sql = "SELECT * FROM catalog WHERE CatalogID = ?";
-    $stmt = $con->prepare($sql);
-    $stmt->bind_param("i", $catalog_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $row = $result->fetch_assoc();
-}
+
 
 $message = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $catalog_id = $_POST['catalogid'];
     $branchId = $_POST["branchid"];
     $bookId = $_POST["bookid"];
     $copies = $_POST["copies"];
@@ -30,6 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bind_param('iiisi', $branchId, $bookId, $copies, $location, $catalog_id);
     if ($stmt->execute()) {
         $message = "Catalog details updated successfully!";
+        header("refresh:1; url=admin-catalogs.php");
     } else {
         $message = "Error: " . $stmt->error;
     }
@@ -44,6 +38,7 @@ while ($row_branch = mysqli_fetch_assoc($result)) {
     $branches[] = $row_branch;
 }
 mysqli_free_result($result);
+
 
 $books = [];
 $bookQuery = "SELECT BookID, Title FROM book";
@@ -89,36 +84,54 @@ mysqli_free_result($result);
                 <h2 class="card-title text-center mb-4">Edit Catalog Entry</h2>
                 <?php if ($message) echo "<div class='alert alert-info'>$message</div>"; ?>
                 <form action="" method="POST">
+                <div class="form-group">
+                                <label for="">Catalog ID</label>
+                                <select class="form-control" name="catalogid" required="required">
+                                    <option value="">Select Catalog ID</option>
+                                    <?php
+                                    $sql = "SELECT * FROM catalog";
+                                    $result = mysqli_query($con, $sql);
+                                    while ($row = mysqli_fetch_assoc($result)) {
+                                        ?>
+                                        <option value="<?php echo $row['CatalogID']; ?>"><?php echo $row['CatalogID']; ?></option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                            <label for="">Branch:</label>
+                            <select class="form-control" name="branchid" required="required">
+                                <option value="">Select Branch</option>
+                                <?php
+                                $sql = "SELECT * FROM branch";
+                                $result = mysqli_query($con, $sql);
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                    ?>
+                                    <option value="<?php echo $row['BranchID']; ?>"><?php echo $row['Branch Name']; ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Book:</label>
+                            <select class="form-control" name="bookid" required="required">
+                                <option value="">Select Book</option>
+                                <?php
+                                $sql = "SELECT * FROM book";
+                                $result = mysqli_query($con, $sql);
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                    ?>
+                                    <option value="<?php echo $row['BookID']; ?>"><?php echo $row['Title']; ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
                     <div class="form-group">
-                        <label for="branch">Branch:</label>
-                        <select id="branch" name="branchid" class="form-control">
-                            <option value="">Select Branch</option>
-                            <?php foreach ($branches as $branch): ?>
-                                <option value="<?php echo $branch['BranchID']; ?>" <?php if ($row['BranchID'] == $branch['BranchID']) echo 'selected'; ?>>
-                                    <?php echo htmlspecialchars($branch['Branch Name']); ?>
-                                </option>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
+                                <label for="">No. of copies</label>
+                                <input type="text" name="copies" class="form-control">
+                            </div>
                     <div class="form-group">
-                        <label for="book">Book:</label>
-                        <select id="book" name="bookid" class="form-control">
-                            <option value="">Select Book</option>
-                            <?php foreach ($books as $book): ?>
-                                <option value="<?php echo $book['BookID']; ?>" <?php if ($row['BookID'] == $book['BookID']) echo 'selected'; ?>>
-                                    <?php echo htmlspecialchars($book['Title']); ?>
-                                </option>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="copies">No. of copies:</label>
-                        <input type="number" id="copies" name="copies" class="form-control" value="<?php echo $row['Num_of_copies']; ?>" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="location">Book Location:</label>
-                        <input type="text" id="location" name="location" class="form-control" value="<?php echo $row['Book Location']; ?>" required>
-                    </div>
+                                <label for="">Book Location</label>
+                                <input type="text" name="location" class="form-control">
+                            </div>
+                    
                     <button type="submit" name="submit" class="btn btn-primary">Update Catalog</button>
                 </form>
             </div>

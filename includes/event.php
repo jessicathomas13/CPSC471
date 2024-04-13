@@ -94,8 +94,8 @@ include('sqlconnect.php');
         <div class="card book-card h-100" onclick="window.location.href='user-event.php?bookID=<?php echo $row['EventName']; ?>'">
           
           <div class="card-body">
-            <h5 class="card-title"><?php echo htmlspecialchars($row['Branch Name']); ?></h5>
-            <p class="card-text">Author: <?php echo htmlspecialchars($row['Address']); ?></p>
+            <h5 class="card-title"><?php echo htmlspecialchars($row['EventName']); ?></h5>
+            <p class="card-text">Branch: <?php echo htmlspecialchars($row['Branch Name']); ?></p>
             
           </div>
         </div>

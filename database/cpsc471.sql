@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 13, 2024 at 02:09 AM
+-- Generation Time: Apr 13, 2024 at 07:41 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -58,8 +58,14 @@ CREATE TABLE `author` (
 
 INSERT INTO `author` (`Name`, `Nationality`) VALUES
 ('Arthur Conan Doyle', 'United Kingdom'),
+('Bram Stoker', 'Ireland'),
+('E.B. White', 'United States'),
+('Frank Herbert', 'United States'),
+('George Orwell', 'United Kingdom'),
 ('Jane Austen', 'United Kingdom'),
-('Robert Louis Stevenson', 'Scotland');
+('Ramez Elmasri', 'Egypt'),
+('Robert Louis Stevenson', 'Scotland'),
+('Simon Thompson', 'United Kingdom');
 
 -- --------------------------------------------------------
 
@@ -69,7 +75,7 @@ INSERT INTO `author` (`Name`, `Nationality`) VALUES
 
 CREATE TABLE `book` (
   `BookID` varchar(100) NOT NULL,
-  `Genre` varchar(100) NOT NULL,
+  `Genre` varchar(250) NOT NULL,
   `Title` varchar(100) NOT NULL,
   `AuthorName` varchar(250) NOT NULL,
   `PublisherName` varchar(100) NOT NULL,
@@ -81,9 +87,15 @@ CREATE TABLE `book` (
 --
 
 INSERT INTO `book` (`BookID`, `Genre`, `Title`, `AuthorName`, `PublisherName`, `bookIMG`) VALUES
+('1098', 'Science Fiction', '1984', 'George Orwell', 'Penguin Books', 'george-orwell-1984.jpg'),
 ('2314', 'Adventure', 'Treasure Island', 'Robert Louis Stevenson', 'Simon & Schuster', 'treasureisland.jpg'),
+('3237', 'Children\'s Literature', 'Charlotte\'s Web', 'E.B. White', 'HarperCollins', 'charlotte-web.jpg'),
 ('3794', 'Romance', 'Pride and Prejudice', 'Jane Austen', 'Dover Publications', 'pride-and-prejudice.jpg'),
-('4516', 'Mystery', 'A Study in Scarlet', 'Arthur Conan Doyle', 'East India Publishing Company ', 'AStudyinScarlet-01.jpg');
+('4516', 'Mystery', 'A Study in Scarlet', 'Arthur Conan Doyle', 'East India Publishing Company ', 'AStudyinScarlet-01.jpg'),
+('5928', 'Computer Science', 'Haskell: The Craft of Functional Programming', 'Simon Thompson', 'Addison Wesley', 'haskell.jpg'),
+('6831', 'Science Fiction', 'Dune', 'Frank Herbert', 'Penguin Books', 'dune.jpg'),
+('7182', 'Computer Science', 'Fundamentals of Database Systems', 'Ramez Elmasri', 'Pearson', 'fundamentals.jpg'),
+('8293', 'Horror', 'Dracula', 'Bram Stoker', 'Simon & Schuster', 'dracula.jpg');
 
 -- --------------------------------------------------------
 
@@ -94,7 +106,7 @@ INSERT INTO `book` (`BookID`, `Genre`, `Title`, `AuthorName`, `PublisherName`, `
 CREATE TABLE `branch` (
   `BranchID` int(100) NOT NULL,
   `Branch Name` varchar(100) NOT NULL,
-  `Address` varchar(100) NOT NULL
+  `Address` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -102,7 +114,10 @@ CREATE TABLE `branch` (
 --
 
 INSERT INTO `branch` (`BranchID`, `Branch Name`, `Address`) VALUES
-(32, 'calgary library', 'knjwrkr');
+(32, 'Louise Riley Library', '1904 14 Ave NW, Calgary'),
+(33, 'Nose Hill Library', '1530 Northmount Dr NW, Calgary'),
+(34, 'Central Library', '800 3 St SE, Calgary'),
+(35, 'Memorial Park Library', '1221 2 St SW, Calgary');
 
 -- --------------------------------------------------------
 
@@ -111,23 +126,19 @@ INSERT INTO `branch` (`BranchID`, `Branch Name`, `Address`) VALUES
 --
 
 CREATE TABLE `catalog` (
-  `BranchID` int(100) NOT NULL,
   `Catalog Name` varchar(100) NOT NULL,
+  `BranchID` int(100) NOT NULL,
+  `BookID` varchar(100) NOT NULL,
+  `Num_of_copies` int(250) NOT NULL,
   `Book Location` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- --------------------------------------------------------
-
 --
--- Table structure for table `copy`
+-- Dumping data for table `catalog`
 --
 
-CREATE TABLE `copy` (
-  `Book id` varchar(100) NOT NULL,
-  `BranchID` int(100) NOT NULL,
-  `No. of copies` int(100) NOT NULL,
-  `Location` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+INSERT INTO `catalog` (`Catalog Name`, `BranchID`, `BookID`, `Num_of_copies`, `Book Location`) VALUES
+('Calgary Public Library Catalog', 32, '4516', 2, 'G-6');
 
 -- --------------------------------------------------------
 
@@ -138,7 +149,7 @@ CREATE TABLE `copy` (
 CREATE TABLE `event` (
   `EventID` int(100) NOT NULL,
   `BranchID` int(100) NOT NULL,
-  `Date` varchar(100) NOT NULL,
+  `Date` timestamp(4) NULL DEFAULT NULL,
   `Description` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -147,7 +158,10 @@ CREATE TABLE `event` (
 --
 
 INSERT INTO `event` (`EventID`, `BranchID`, `Date`, `Description`) VALUES
-(2332, 32, '04-20-24', 'Calligraphy class');
+(2332, 32, '2024-04-18 13:00:00.0000', 'Calligraphy class'),
+(3926, 34, '2024-05-25 20:00:00.0000', 'Gimme 10 Minutes: A Staged Reading'),
+(4372, 35, '2024-05-09 23:00:00.0000', 'How We Gather Matters - Official Book Launch'),
+(6821, 33, '2024-05-15 23:00:00.0000', 'Game Night: Pictionary');
 
 -- --------------------------------------------------------
 
@@ -168,7 +182,7 @@ CREATE TABLE `loan` (
 --
 
 INSERT INTO `loan` (`BookID`, `Cardno`, `BranchID`, `Loan date`, `Return date`) VALUES
-('2314', 56, 32, '2024-04-12 02:09:45', '2024-04-19 02:09:45');
+('2314', 56, 32, '2024-04-11 05:40:00', '2024-04-20 05:40:00');
 
 -- --------------------------------------------------------
 
@@ -187,9 +201,12 @@ CREATE TABLE `publisher` (
 --
 
 INSERT INTO `publisher` (`Name`, `Address`, `Phone`) VALUES
+('Addison Wesley', '1900 E Lake Ave Glenview, IL', '+1 (250) 380-6850'),
 ('Dover Publications', '1325 Franklin Ave, Ste 250, Garden City, NY 11530', '+1 (516) 742-50'),
 ('East India Publishing Company ', 'Ottawa, ON, Canada.', '+1 (613) 567-463'),
-('jojoisugly', '333', '+1(402) 268-4024'),
+('HarperCollins', '195 Broadway, New York, NY 10007', '+1 (844) 327-5757'),
+('Pearson', '176 Yonge St, 6th floor. Toronto, ON', '+1 (800) 361-6128'),
+('Penguin Books', '320 Front Street West, Suite 1400 Toronto, Ontario', '+1 (416) 364-4449'),
 ('Simon & Schuster', '166 King Street East, Suite 300. Toronto, ON', '+1 (647) 427-88');
 
 -- --------------------------------------------------------
@@ -252,14 +269,8 @@ ALTER TABLE `branch`
 --
 ALTER TABLE `catalog`
   ADD PRIMARY KEY (`Catalog Name`),
-  ADD KEY `branchid2` (`BranchID`);
-
---
--- Indexes for table `copy`
---
-ALTER TABLE `copy`
-  ADD KEY `bid` (`Book id`),
-  ADD KEY `br id` (`BranchID`);
+  ADD KEY `branchid2` (`BranchID`),
+  ADD KEY `book_ID` (`BookID`);
 
 --
 -- Indexes for table `event`
@@ -311,14 +322,8 @@ ALTER TABLE `book`
 -- Constraints for table `catalog`
 --
 ALTER TABLE `catalog`
+  ADD CONSTRAINT `book_ID` FOREIGN KEY (`BookID`) REFERENCES `book` (`BookID`),
   ADD CONSTRAINT `branchid2` FOREIGN KEY (`BranchID`) REFERENCES `branch` (`BranchID`);
-
---
--- Constraints for table `copy`
---
-ALTER TABLE `copy`
-  ADD CONSTRAINT `bid` FOREIGN KEY (`Book id`) REFERENCES `book` (`BookID`),
-  ADD CONSTRAINT `br id` FOREIGN KEY (`BranchID`) REFERENCES `branch` (`BranchID`);
 
 --
 -- Constraints for table `event`

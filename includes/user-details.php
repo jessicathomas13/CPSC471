@@ -19,7 +19,7 @@ $userResult = $stmt->get_result();
 $user = $userResult->fetch_assoc();
 
 // Prepare to fetch loan details
-$loanQuery = "SELECT BookID, `Branch ID`, `Loan date`, `Return date` FROM loan WHERE Cardno = ?";
+$loanQuery = "SELECT BookID, `BranchID`, `Loan date`, `Return date` FROM loan WHERE Cardno = ?";
 $stmt = $con->prepare($loanQuery);
 $stmt->bind_param("s", $cardno);
 $stmt->execute();
@@ -80,7 +80,7 @@ $loanResult = $stmt->get_result();
         <?php while ($loan = $loanResult->fetch_assoc()): ?>
         <tr>
             <td><?= htmlspecialchars($loan['BookID']); ?></td>
-            <td><?= htmlspecialchars($loan['Branch ID']); ?></td>
+            <td><?= htmlspecialchars($loan['BranchID']); ?></td>
             <td><?= htmlspecialchars($loan['Loan date']); ?></td>
             <td><?= htmlspecialchars($loan['Return date']); ?></td>
         </tr>

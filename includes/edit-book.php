@@ -25,6 +25,7 @@ if (!$bookDetails) {
 // Fetch authors and publishers for dropdown
 $authors = mysqli_query($con, "SELECT * FROM author");
 $publishers = mysqli_query($con, "SELECT * FROM publisher");
+$branches = mysqli_query($con, "SELECT * FROM branch");
 
 // Handle form submission for updating book details
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -32,17 +33,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $author = $_POST['author'];
     $genre = $_POST['genre'];
     $publisher = $_POST['publisher'];
-
+    
     $image = $bookDetails['bookIMG']; // default to old image
     if ($_FILES['image']['name']) { // new image uploaded
         $image = $_FILES['image']['name'];
         $target = "bookimg/" . basename($image);
         move_uploaded_file($_FILES['image']['tmp_name'], $target);
     }
+    $branchid = $_POST['branchid'];
 
-    $updateQuery = "UPDATE book SET Title=?, AuthorName=?, Genre=?, PublisherName=?, bookIMG=? WHERE BookID=?";
+    $updateQuery = "UPDATE book SET Title=?, AuthorName=?, Genre=?, PublisherName=?, bookIMG=?, BranchID=? WHERE BookID=?";
     $updateStmt = $con->prepare($updateQuery);
-    $updateStmt->bind_param("sssssi", $title, $author, $genre, $publisher, $image, $bookID);
+    $updateStmt->bind_param("ssssssi", $title, $author, $genre, $publisher, $image, $branchid,$bookID);
     $updateStmt->execute();
     $updateStmt->close();
 
@@ -87,6 +89,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     } ?>
                 </select>
             </div>
+
+            <div class="form-group">
+                <label for="">Branch:</label>
+                <select class="form-control" name="branchid" required="required">
+                    <option value="">Select Branch</option>
+                    <?php
+                    $sql = "SELECT * FROM branch";
+                    $result = mysqli_query($con, $sql);
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        ?>
+                        <option value="<?php echo $row['BranchID']; ?>"><?php echo $row['Branch Name']; ?></option>
+                    <?php } ?>
+                </select>
+            </div>
+            
             <div class="form-group">
                 <label>Book Image:</label>
                 <input type="file" class="form-control-file" name="image">

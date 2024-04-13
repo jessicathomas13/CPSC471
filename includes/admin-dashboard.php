@@ -39,6 +39,7 @@ include('sqlconnect.php');
               <h4 class="header-line"><a class="default-link-style <?php if($_SERVER["PHP_SELF"]=='event.php'){echo 'style-active';}?>"  href="admin-event.php">EVENTS</a></h4>
               <h4 class="header-line"><a class="default-link-style <?php if($_SERVER["PHP_SELF"]=='publisher.php'){echo 'style-active';}?>"  href="publisher.php">PUBLISHERS</a></h4>
               <h4 class="header-line"><a class="default-link-style <?php if($_SERVER["PHP_SELF"]=='author.php'){echo 'style-active';}?>"  href="author.php">AUTHORS</a></h4>
+              <h4 class="header-line"><a class="default-link-style <?php if($_SERVER["PHP_SELF"]=='admin-catalogs.php'){echo 'style-active';}?>"  href="admin-catalogs.php">CATALOGS</a></h4>
             </div>  
             </div>
 
@@ -82,6 +83,7 @@ while ($row = mysqli_fetch_assoc($result))  {             ?>
                                      
 <img src="bookimg/<?php echo $row['bookIMG'];?>" width="100">
                                                 <br /><b><?php echo $row['Title'];?></b><br />
+                                                <?php echo $row['AuthorName'];?><br />
                                                 <?php echo $row['Genre'];?><br />
                                             <?php echo $row['PublisherName'];?><br />
                                             <?php echo $row['BookID'];?><br />

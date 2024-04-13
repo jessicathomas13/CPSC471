@@ -78,9 +78,10 @@ while ($row = mysqli_fetch_assoc($result))  {             ?>
                                      
 <img src="bookimg/<?php echo $row['bookIMG'];?>" width="100">
                                                 <br /><b><?php echo $row['Title'];?></b><br />
+                                                <?php echo $row['AuthorName'];?><br />
                                                 <?php echo $row['Genre'];?><br />
                                             <?php echo $row['PublisherName'];?><br />
-                                            <?php echo $row['BookID'];?><br />
+                                        
                                                 
                             </div>
 

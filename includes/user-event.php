@@ -6,7 +6,7 @@ $event = isset($_GET['EventName']) ? $_GET['EventName'] : null;
 $eventDetails = null;
 
 if ($bookID) {
-    $query = "SELECT event.*, branch.`Branch Name`, branch.`Address` FROM branch JOIN event ON branch.BranchID = event.BranchID ";
+    $query = "SELECT event.*, branch.`Branch Name`, branch.`Address` FROM branch JOIN event ON branch.BranchID = event.BranchID WHERE EventName = ?";
     $stmt = $con->prepare($query);
     $stmt->bind_param("i", $event);
     $stmt->execute();

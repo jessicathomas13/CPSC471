@@ -91,7 +91,7 @@ include('sqlconnect.php');
     $result = mysqli_query($con, $sql);
     while ($row = mysqli_fetch_assoc($result)) { ?>
       <div class="col-md-4 mb-4">
-        <div class="card book-card h-100" onclick="window.location.href='user-event.php?bookID=<?php echo $row['EventName']; ?>'">
+        <div class="card book-card h-100" onclick="window.location.href='user-event.php?EventName=<?php echo $row['EventName']; ?>'">
           
           <div class="card-body">
             <h5 class="card-title"><?php echo htmlspecialchars($row['EventName']); ?></h5>

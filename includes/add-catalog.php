@@ -44,6 +44,11 @@ border: 0px solid black!important;
                         <form action="" method="POST" enctype="multipart/form-data">
 
                         <div class="form-group">
+                                <label for="">Catalog ID:</label>
+                                <input type="text" name="catalogid" class="form-control ">
+                            </div>
+
+                        <div class="form-group">
                         <label for="">Branch:</label>
                         <select class="form-control" name="branchid" required="required">
                         <option value=""> Select Branch</option>
@@ -92,14 +97,15 @@ border: 0px solid black!important;
 
                             $bkid = $_POST['bookid'];
                             $branch = $_POST['branchid'];
+                            $catalog = $_POST['catalogid'];
                             $copies = $_POST['copies'];
                             $location = $_POST['location'];
 
-                            $sql_query = "insert into catalog (BranchID, BookID, Num_of_copies, Book Location) VALUES ('$branchid', '$bkid', '$copies', '$location')";
+                            $sql_query = "INSERT INTO catalog(catalogid, branchid, bookid, copies, location) VALUES('$catalog', '$branchid', '$bkid', '$copies', '$location')";
 
                             if (mysqli_query($con, $sql_query)) {
                                       echo "<script>alert('Book added to catalog successfully!');</script>";
-                                echo "<script>window.location.href='admin-catalogs.php'</script>";}
+                                      echo "<script>window.location.href='admin-catalogs.php'</script>";}
                             else {
                                       echo "Error: " . $sql_query . "<br>" . mysqli_error($con);	}
                         

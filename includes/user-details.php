@@ -87,6 +87,14 @@ $loanResult = $stmt->get_result();
         <?php endwhile; ?>
     </table>
 </div>
+<!-- Add Loan button -->
+<div style="margin-top: 20px;">
+    <form action="add-loan.php" method="get">
+        <input type="hidden" name="cardno" value="<?= htmlspecialchars($cardno); ?>">
+        <input type="submit" value="Add Loan">
+    </form>
+</div>
+
 
 </body>
 </html>

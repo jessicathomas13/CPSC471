@@ -36,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $updateQuery = "UPDATE event SET EventName=?, BranchID=?, Date=?, Description=? WHERE EventID=?";
     $updateStmt = $con->prepare($updateQuery);
-    $updateStmt->bind_param("sssssi", $eventname, $branchid, $date, $description, $eventID);
+    $updateStmt->bind_param("ssssi", $eventname, $branchid, $date, $description, $eventID);
     $updateStmt->execute();
     $updateStmt->close();
 
@@ -62,15 +62,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <input type="text" class="form-control" name="eventname" value="<?php echo htmlspecialchars($eventDetails['EventName']); ?>" required>
             </div>
             <div class="form-group">
-                                <label for="">Branch ID:</label>
-                                <select class="form-control" name="publishername" required="required">
+                                <label for="">Branch Name:</label>
+                                <select class="form-control" name="branch" required="required">
                                     <option value="">Select BranchID</option>
                                     <?php
                                     $sql = "SELECT * FROM branch";
                                     $result = mysqli_query($con, $sql);
                                     while ($row = mysqli_fetch_assoc($result)) {
                                         ?>
-                                        <option value="<?php echo $row['Name']; ?>"><?php echo $row['Name']; ?></option>
+                                        <option value="<?php echo $row['BranchID']; ?>"><?php echo $row['Branch Name']; ?></option>
                                     <?php } ?>
                                 </select>
                             </div>

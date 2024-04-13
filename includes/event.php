@@ -189,7 +189,7 @@ include('sqlconnect.php');
     <?php
    
     $sql = "SELECT event.*, branch.`Branch Name`, branch.`Address` FROM branch JOIN event ON branch.BranchID = event.BranchID ";
-$result = mysqli_query($con, $sql);
+    $result = mysqli_query($con, $sql);
     $result = mysqli_query($con, $sql);
     while ($row = mysqli_fetch_assoc($result)) { ?>
       <div class="col-md-4 mb-4">

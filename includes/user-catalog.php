@@ -70,23 +70,6 @@ include('sqlconnect.php');
   </style>
 </head>
 <body>
-<<<<<<< HEAD
-<nav class="navbar navbar-expand-lg navbar-custom">
-  <div class="container">
-    <a class="navbar-brand" href="#">Library System</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ml-auto">
-
-        <li class="nav-item"><a class="nav-link" href="dashboard.php">HOME</a></li>
-        <li class="nav-item"><a class="nav-link" href="index.php">LOGOUT</a></li>
-      </ul>
-    </div>
-  </div>
-</nav>
-=======
   <div class="flex-wrapper">
     <nav class="navbar navbar-expand-lg navbar-custom">
       <div class="container">
@@ -104,7 +87,6 @@ include('sqlconnect.php');
         </div>
       </div>
     </nav>
->>>>>>> 699a4d02168c9ad7be3d28f1d682cdacf96e1e86
 
     <div class="content">
       <div class="container mt-4">

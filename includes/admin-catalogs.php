@@ -90,7 +90,7 @@ include('sqlconnect.php');
 </nav>
 
 <div class="container mt-4">
-  <h1 class="text-center mb-4 dashboard-title">Catalogs</h1>
+  <h1 class="text-center mb-4 dashboard-title">Catalog</h1>
   <div class="row">
     <?php
    

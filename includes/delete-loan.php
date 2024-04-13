@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Loan was deleted successfully
             $message = "Loan deleted successfully. You will be redirected shortly.";
             echo $message;
-            header("Refresh: 2; URL=user-details.php");
+            header("Refresh: 2; URL=users.php");
             exit;
         } else {
             // Loan does not exist or couldn't be deleted

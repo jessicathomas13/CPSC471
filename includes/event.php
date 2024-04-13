@@ -34,6 +34,7 @@ include('sqlconnect.php');
     .book-card:hover {
       transform: scale(1.05);
     }
+    
     .footer {
       background-color: #403F5D;
       color: white;
@@ -41,7 +42,7 @@ include('sqlconnect.php');
       padding: 1px;
       position: fixed;
       left: 0;
-      bottom: 0;
+      bottom: 80;
       width: 100%;
     }
     body {
@@ -91,7 +92,7 @@ include('sqlconnect.php');
     $result = mysqli_query($con, $sql);
     while ($row = mysqli_fetch_assoc($result)) { ?>
       <div class="col-md-4 mb-4">
-        <div class="card book-card h-100" onclick="window.location.href='user-event.php?EventName=<?php echo $row['EventName']; ?>'">
+        <div class="card book-card h-100" onclick="window.location.href='user-event.php?EventID=<?php echo $row['EventID']; ?>'">
           
           <div class="card-body">
             <h5 class="card-title"><?php echo htmlspecialchars($row['EventName']); ?></h5>

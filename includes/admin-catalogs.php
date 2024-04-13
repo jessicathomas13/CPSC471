@@ -6,7 +6,7 @@ include('sqlconnect.php');
 $catalogs = [];  
 
 
-$query = "SELECT * FROM catalog"; 
+$query = "SELECT * FROM catalog LEFT JOIN branch ON branch.BranchID = catalog.BranchID LEFT JOIN book ON book.bookID = catalog.bookID";
 $stmt = $con->prepare($query);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -79,9 +79,9 @@ while ($row = $result->fetch_assoc()) {
     <div class="navbar">
         <h1>Catalog Management</h1>
         <a href="admin-dashboard.php">Home</a>
-        <a href="edit-publisher.php">Edit Catalog</a>
-        <a href="delete-publisher.php">Delete Catalog</a>
-        <a href="add-publisher.php">Add Catalog</a>       
+        <a href="edit-catalog.php">Edit Catalog</a>
+        <a href="delete-catalog.php">Delete Catalog</a>
+        <a href="add-catalog.php">Add Catalog</a>       
     </div>
 
 <div class="content">
@@ -95,6 +95,12 @@ while ($row = $result->fetch_assoc()) {
         <?php foreach ($catalogs as $catalog): ?>
             <tr>
                 <td><?= htmlspecialchars($catalog['Catalog Name']); ?></td>
+                <td><?= htmlspecialchars($catalog['Branch Name']); ?></td>
+                <td><?= htmlspecialchars($catalog['Book Name']); ?></td>
+                <td><?= htmlspecialchars($catalog['Num_of_copies']); ?></td>
+                <td><?= htmlspecialchars($catalog['Location']); ?></td>
+
+
                 
             </tr>
         <?php endforeach; ?>

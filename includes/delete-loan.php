@@ -10,15 +10,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $bookID = $_POST["bookID"];
     $adminPassword = $_POST["adminPassword"]; // Placeholder for admin password
 
-    // Here we should ideally have the admin password stored securely, not plaintext
-    $expectedAdminPassword = "adminPass"; // This should be the actual admin password
+
+    $query = "SELECT Password FROM admin WHERE Password = ?";
+    $stmt = $con->prepare($query);
+    $stmt->bind_param("s", $adminPassword);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
     // Check if admin password is correct
-    if ($adminPassword === $expectedAdminPassword) {
+    if ($row = $result->fetch_assoc()) {
+        if ($adminPassword === $row['Password']) {
         // Admin password is correct, proceed with loan deletion
         $delete_query = "DELETE FROM loan WHERE BookID = ?";
         $delete_stmt = $con->prepare($delete_query);
-        $delete_stmt->bind_param("i", $bookID);
+        $delete_stmt->bind_param("s", $bookID);
         $delete_stmt->execute();
 
         if ($delete_stmt->affected_rows > 0) {
@@ -36,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Admin password is incorrect
         $message = "Incorrect admin password.";
     }
-}
+}}
 ?>
 
 <!DOCTYPE html>

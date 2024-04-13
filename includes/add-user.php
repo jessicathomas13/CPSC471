@@ -4,6 +4,16 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 include('sqlconnect.php');
 
+$message = ''; // Initialize message variable to empty
+
+// Fetch branch IDs from the database to populate the dropdown menu
+$query = "SELECT BranchID FROM branch"; // Change 'branches' to your actual table name
+$result = mysqli_query($con, $query);
+$branch_ids = [];
+while ($row = mysqli_fetch_assoc($result)) {
+    $branch_ids[] = $row['BranchID'];
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $cardno = $_POST["cardno"];
     $branchId = $_POST["branch_id"];
@@ -85,7 +95,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       </div>
       <div class="form-group">
         <label for="branch_id">Branch ID</label>
-        <input type="text" id="branch_id" name="branch_id" class="form-control" required>
+        <select id="branch_id" name="branch_id" class="form-control" required>
+          <option value="">Select Branch ID</option>
+          <?php foreach ($branch_ids as $branch_id): ?>
+            <option value="<?php echo $branch_id; ?>"><?php echo $branch_id; ?></option>
+          <?php endforeach; ?>
+        </select>
       </div>
       <div class="form-group">
         <label for="name">Name</label>
@@ -100,7 +115,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <input type="text" id="phone_number" name="phone_number" class="form-control" required>
       </div>
       <div class="form-group">
-        <label for="email">Email</label> <!-- Add email field -->
+        <label for="email">Email</label>
         <input type="email" id="email" name="email" class="form-control" required>
       </div>
       <div class="form-group">

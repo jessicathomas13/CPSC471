@@ -11,7 +11,7 @@ if (!isset($_SESSION['empid'])) {
 $cardno = isset($_GET['cardno']) ? $_GET['cardno'] : '';
 
 // Prepare to fetch user details
-$userQuery = "SELECT Name, Cardno, Address, `Phone no.`, BranchID FROM user WHERE Cardno = ?";
+$userQuery = "SELECT Name, Cardno, Address, `Phone no.`, EmailID, BranchID FROM user WHERE Cardno = ?";
 $stmt = $con->prepare($userQuery);
 $stmt->bind_param("s", $cardno);
 $stmt->execute();
@@ -67,6 +67,7 @@ $loanResult = $stmt->get_result();
         <tr><th>Card Number</th><td><?= htmlspecialchars($user['Cardno']); ?></td></tr>
         <tr><th>Address</th><td><?= htmlspecialchars($user['Address']); ?></td></tr>
         <tr><th>Phone Number</th><td><?= htmlspecialchars($user['Phone no.']); ?></td></tr>
+        <tr><th>Email</th><td><?= htmlspecialchars($user['EmailID']); ?></td></tr> <!-- Add email row -->
         <tr><th>Branch ID</th><td><?= htmlspecialchars($user['BranchID']); ?></td></tr>
     </table>
     <h2>Loan Details</h2>

@@ -89,10 +89,19 @@ $loanResult = $stmt->get_result();
 </div>
 <!-- Add Loan button -->
 <div style="margin-top: 20px;">
-    <form action="add-loan.php" method="get">
-        <input type="hidden" name="cardno" value="<?= htmlspecialchars($cardno); ?>">
-        <input type="submit" value="Add Loan">
-    </form>
+        <form action="add-loan.php" method="get">
+            <input type="hidden" name="cardno" value="<?= htmlspecialchars($cardno); ?>">
+            <input type="submit" value="Add Loan">
+        </form>
+    </div>
+
+    <!-- Delete Loan button -->
+    <div style="margin-top: 20px;">
+        <form action="delete-loan.php" method="get">
+            <input type="submit" value="Delete Loan">
+        </form>
+    </div>
+
 </div>
 
 

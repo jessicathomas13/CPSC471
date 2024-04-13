@@ -76,13 +76,7 @@ include('sqlconnect.php');
       <ul class="navbar-nav ml-auto">
       <li class="nav-item"><a class="nav-link" href="add-event.php">ADD EVENT</a></li>
       <li class="nav-item"><a class="nav-link" href="delete-event.php">DELETE EVENT</a></li>
-      <li class="nav-item"><a class="nav-link" href="add-book.php">ADD BOOK</a></li>
-        <li class="nav-item"><a class="nav-link" href="delete-book.php">DELETE BOOK</a></li>
-        <li class="nav-item"><a class="nav-link" href="all-admins.php">OUR ADMINS</a></li>
-        <li class="nav-item"><a class="nav-link" href="users.php">OUR USERS</a></li>
-        <li class="nav-item"><a class="nav-link" href="publisher.php">PUBLISHERS</a></li>
-        <li class="nav-item"><a class="nav-link" href="author.php">AUTHORS</a></li>
-        <li class="nav-item"><a class="nav-link" href="admin-catalogs.php">CATALOGS</a></li>
+      <li class="nav-item"><a class="nav-link" href="admin-dashboard.php">HOME</a></li>
         <li class="nav-item"><a class="nav-link" href="admin-login.php">LOGOUT</a></li>
       </ul>
     </div>

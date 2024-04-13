@@ -6,11 +6,12 @@ include('sqlconnect.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $eventId = $_POST["event_id"];
+    $eventname = $_POST["eventname"];
     $branchId = $_POST["branch_id"];
     $date = $_POST["date"];
     $description = $_POST["description"];
 
-    $sql_query = "insert into event values('$eventId', '$branchId', '$date', '$description')";
+    $sql_query = "insert into event values('$eventId', '$eventname', '$branchId', '$date', '$description')";
 
     if (mysqli_query($con, $sql_query)) {
               echo "<script>alert('Event added successfully!');</script>";
@@ -64,9 +65,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <label for="event_id">Event ID:</label>
                 <input type="text" id="event_id" name="event_id" class="form-control" required>
               </div>
+              <div class="form-group">
+              <label>Event Name:</label>
+              <input class="form-control"  name="eventname"  />
+              </div>
               
               <div class="form-group">
-                  <label for="">Branch</label>
+                  <label for="">Branch:</label>
                   <select class="form-control" name="branch_id" required="required">
                   <option value=""> Select Branch</option>
                   <?php
@@ -79,11 +84,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                   </select>
               </div>
               <div class="form-group">
-              <label>Date</label>
+              <label>Date:</label>
               <input type="datetime-local" class="form-control"  name="date"  />
               </div>
               <div class="form-group">
-              <label>Description</label>
+              <label>Description:</label>
               <input class="form-control"  name="description"  />
               </div>
              

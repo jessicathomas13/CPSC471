@@ -81,8 +81,8 @@ $result = mysqli_query($con, $sql);
 <body>
   <nav class="navbar">
     <div class="container">
-      <a class="<?php if($_SERVER["PHP_SELF"]=='index.php'){echo 'style-active';}?>" href="index.php">Logout</a>
-      <a class="<?php if($_SERVER["PHP_SELF"]=='dashboard.php'){echo 'style-active';}?>" href="dashboard.php">Dashboard</a>
+      <a class="<?php if($_SERVER["PHP_SELF"]=='index.php'){echo 'style-active';}?>" href="index.php">LOGOUT</a>
+      <a class="<?php if($_SERVER["PHP_SELF"]=='dashboard.php'){echo 'style-active';}?>" href="dashboard.php">HOME</a>
     </div>
   </nav>
 

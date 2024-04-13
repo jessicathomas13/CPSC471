@@ -79,7 +79,7 @@ include('sqlconnect.php');
         <li class="nav-item"><a class="nav-link" href="admin-event.php">EVENTS</a></li>
         <li class="nav-item"><a class="nav-link" href="publisher.php">PUBLISHERS</a></li>
         <li class="nav-item"><a class="nav-link" href="author.php">AUTHORS</a></li>
-        <li class="nav-item"><a class="nav-link" href="admin-catalogs.php">CATALOGS</a></li>
+        <li class="nav-item"><a class="nav-link" href="admin-catalogs.php">CATALOG</a></li>
         <li class="nav-item"><a class="nav-link" href="admin-login.php">LOGOUT</a></li>
       </ul>
     </div>

@@ -93,7 +93,7 @@ if (isset($_GET['name'])) {
 </head>
 <body>
 <div class="container">
-    <h1>Edit Author</h1>
+    <h1>Edit Publisher</h1>
     <?php if ($message): ?>
         <div class="alert alert-info"><?php echo $message; ?></div>
     <?php endif; ?>

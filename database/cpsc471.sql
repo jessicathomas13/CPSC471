@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 13, 2024 at 07:41 AM
+-- Generation Time: Apr 13, 2024 at 07:28 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -31,15 +31,16 @@ CREATE TABLE `admin` (
   `Name` varchar(100) DEFAULT NULL,
   `EmpID` int(11) NOT NULL,
   `BranchID` int(11) NOT NULL,
-  `Password` varchar(100) NOT NULL
+  `Password` varchar(100) NOT NULL,
+  `EmailID` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `admin`
 --
 
-INSERT INTO `admin` (`Name`, `EmpID`, `BranchID`, `Password`) VALUES
-('john', 33, 32, 'loll');
+INSERT INTO `admin` (`Name`, `EmpID`, `BranchID`, `Password`, `EmailID`) VALUES
+('john', 33, 32, 'loll', '');
 
 -- --------------------------------------------------------
 
@@ -79,23 +80,24 @@ CREATE TABLE `book` (
   `Title` varchar(100) NOT NULL,
   `AuthorName` varchar(250) NOT NULL,
   `PublisherName` varchar(100) NOT NULL,
-  `bookIMG` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL
+  `bookIMG` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `BranchID` int(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `book`
 --
 
-INSERT INTO `book` (`BookID`, `Genre`, `Title`, `AuthorName`, `PublisherName`, `bookIMG`) VALUES
-('1098', 'Science Fiction', '1984', 'George Orwell', 'Penguin Books', 'george-orwell-1984.jpg'),
-('2314', 'Adventure', 'Treasure Island', 'Robert Louis Stevenson', 'Simon & Schuster', 'treasureisland.jpg'),
-('3237', 'Children\'s Literature', 'Charlotte\'s Web', 'E.B. White', 'HarperCollins', 'charlotte-web.jpg'),
-('3794', 'Romance', 'Pride and Prejudice', 'Jane Austen', 'Dover Publications', 'pride-and-prejudice.jpg'),
-('4516', 'Mystery', 'A Study in Scarlet', 'Arthur Conan Doyle', 'East India Publishing Company ', 'AStudyinScarlet-01.jpg'),
-('5928', 'Computer Science', 'Haskell: The Craft of Functional Programming', 'Simon Thompson', 'Addison Wesley', 'haskell.jpg'),
-('6831', 'Science Fiction', 'Dune', 'Frank Herbert', 'Penguin Books', 'dune.jpg'),
-('7182', 'Computer Science', 'Fundamentals of Database Systems', 'Ramez Elmasri', 'Pearson', 'fundamentals.jpg'),
-('8293', 'Horror', 'Dracula', 'Bram Stoker', 'Simon & Schuster', 'dracula.jpg');
+INSERT INTO `book` (`BookID`, `Genre`, `Title`, `AuthorName`, `PublisherName`, `bookIMG`, `BranchID`) VALUES
+('1098', 'Science Fiction', '1984', 'George Orwell', 'Penguin Books', 'george-orwell-1984.jpg', 0),
+('2314', 'Adventure', 'Treasure Island', 'Robert Louis Stevenson', 'Simon & Schuster', 'treasureisland.jpg', 0),
+('3237', 'Children\'s Literature', 'Charlotte\'s Web', 'E.B. White', 'HarperCollins', 'charlotte-web.jpg', 0),
+('3794', 'Romance', 'Pride and Prejudice', 'Jane Austen', 'Dover Publications', 'pride.jpg', 0),
+('4516', 'Mystery', 'A Study in Scarlet', 'Arthur Conan Doyle', 'East India Publishing Company ', 'AStudyinScarlet-01.jpg', 0),
+('5928', 'Computer Science', 'Haskell: The Craft of Functional Programming', 'Simon Thompson', 'Addison Wesley', 'haskell.jpg', 0),
+('6831', 'Science Fiction', 'Dune', 'Frank Herbert', 'Penguin Books', 'dune.jpg', 0),
+('7182', 'Computer Science', 'Fundamentals of Database Systems', 'Ramez Elmasri', 'Pearson', 'fundamentals.jpg', 0),
+('8293', 'Horror', 'Dracula', 'Bram Stoker', 'Simon & Schuster', 'dracula.jpg', 0);
 
 -- --------------------------------------------------------
 
@@ -148,6 +150,7 @@ INSERT INTO `catalog` (`Catalog Name`, `BranchID`, `BookID`, `Num_of_copies`, `B
 
 CREATE TABLE `event` (
   `EventID` int(100) NOT NULL,
+  `EventName` varchar(250) NOT NULL,
   `BranchID` int(100) NOT NULL,
   `Date` timestamp(4) NULL DEFAULT NULL,
   `Description` varchar(200) NOT NULL
@@ -157,11 +160,11 @@ CREATE TABLE `event` (
 -- Dumping data for table `event`
 --
 
-INSERT INTO `event` (`EventID`, `BranchID`, `Date`, `Description`) VALUES
-(2332, 32, '2024-04-18 13:00:00.0000', 'Calligraphy class'),
-(3926, 34, '2024-05-25 20:00:00.0000', 'Gimme 10 Minutes: A Staged Reading'),
-(4372, 35, '2024-05-09 23:00:00.0000', 'How We Gather Matters - Official Book Launch'),
-(6821, 33, '2024-05-15 23:00:00.0000', 'Game Night: Pictionary');
+INSERT INTO `event` (`EventID`, `EventName`, `BranchID`, `Date`, `Description`) VALUES
+(2332, 'Calligraphy class', 32, '2024-04-18 13:00:00.0000', 'Dive into the art of calligraphy at our library event! Discover the beauty of brushstrokes and lettering techniques with expert guidance. Join us for a creative journey into this timeless craft!'),
+(3926, 'Gimme 10 Minutes: A Staged Reading', 34, '2024-05-25 20:00:00.0000', 'Celebrate the art of the ten-minute play! Enjoy dynamic short performances of new works from playwrights and theatre artists in this staged reading showcase.'),
+(4372, 'How We Gather Matters - Official Book Launch', 35, '2024-05-09 23:00:00.0000', 'Welcome to the Official Book Launch of \"How We Gather Matters\" by Leor Rotchild. Join us for an exciting, family-friendly event filled with insightful discussions.'),
+(6821, 'Game Night: Pictionary', 33, '2024-05-15 23:00:00.0000', 'Come join us for a fun evening filled with games, laughter, and good company. It\'s the perfect opportunity to unwind and enjoy some friendly competition.');
 
 -- --------------------------------------------------------
 
@@ -222,16 +225,17 @@ CREATE TABLE `user` (
   `Address` varchar(100) NOT NULL,
   `Phone no.` varchar(15) NOT NULL,
   `Password` varchar(100) NOT NULL,
-  `Status` int(1) NOT NULL
+  `Status` int(1) NOT NULL,
+  `EmailID` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`Cardno`, `BranchID`, `Name`, `Address`, `Phone no.`, `Password`, `Status`) VALUES
-(56, 32, 'jj', 'enjkbd', '37283000', 'lol', 1),
-(38493, 32, 'abc', 'dkjwkblw', '37882773', 'abc123', 1);
+INSERT INTO `user` (`Cardno`, `BranchID`, `Name`, `Address`, `Phone no.`, `Password`, `Status`, `EmailID`) VALUES
+(56, 32, 'jj', 'enjkbd', '37283000', 'lol', 1, ''),
+(38493, 32, 'abc', 'dkjwkblw', '37882773', 'abc123', 1, '');
 
 --
 -- Indexes for dumped tables
@@ -256,7 +260,8 @@ ALTER TABLE `author`
 ALTER TABLE `book`
   ADD PRIMARY KEY (`BookID`),
   ADD KEY `author` (`AuthorName`),
-  ADD KEY `publisher` (`PublisherName`);
+  ADD KEY `publisher` (`PublisherName`),
+  ADD KEY `BranchID` (`BranchID`);
 
 --
 -- Indexes for table `branch`

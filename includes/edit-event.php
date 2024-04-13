@@ -7,7 +7,7 @@ $eventDetails = null;
 
 // Fetch event details from the database based on the event ID
 if ($eventID) {
-    $query = "SELECT event.*, branch.`Branch Name`, branch.`Address` FROM branch JOIN event ON branch.BranchID = event.BranchID WHERE EventID = ?";
+    $query = "SELECT * FROM event WHERE EventID = ?";
     $stmt = $con->prepare($query);
     $stmt->bind_param("i", $eventID);
     $stmt->execute();
@@ -29,7 +29,7 @@ $branch = mysqli_query($con, "SELECT * FROM branch");
 // Handle form submission for updating event details
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $eventname = $_POST['eventname'];
-    $branchid= $_POST['branchid'];
+    $branchid= $_POST['branch'];
     $date = $_POST['date'];
     $description = $_POST['description'];
 

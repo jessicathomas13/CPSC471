@@ -86,7 +86,7 @@ if (!$eventDetails) {
             <p><strong>Description:</strong> <?php echo htmlspecialchars($eventDetails['Description']); ?></p>
             <p><strong>Date:</strong> <?php echo htmlspecialchars($eventDetails['Date']); ?></p>
         </div>
-        <a href="edit-event.php?EventID=<?php echo $EventID; ?>" class="btn btn-primary edit-button">Edit Event Details</a>
+        <a href="edit-event.php?EventID=<?php echo $eventDetails['EventID']; ?>" class="btn btn-primary edit-button">Edit Event Details</a>
         <a href="admin-event.php" class="btn btn-primary edit-button">Return to Events</a>
     </div>
 

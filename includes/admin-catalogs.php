@@ -81,7 +81,6 @@ include('sqlconnect.php');
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item"><a class="nav-link" href="add-catalog.php">ADD BOOK TO CATALOG</a></li>
-            <li class="nav-item"><a class="nav-link" href="delete-book.php">DELETE BOOK</a></li>
             <li class="nav-item"><a class="nav-link" href="edit-catalog.php">EDIT CATALOG</a></li>
             <li class="nav-item"><a class="nav-link" href="admin-dashboard.php">HOME</a></li>
             <li class="nav-item"><a class="nav-link" href="admin-login.php">LOGOUT</a></li>

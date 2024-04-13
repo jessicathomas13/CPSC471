@@ -95,7 +95,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               </div>
               <div class="form-group">
               <label>Date</label>
-              <input class="form-control"  name="date"  />
+              <input type="datetime-local" class="form-control"  name="date"  />
               </div>
               <div class="form-group">
               <label>Description</label>

@@ -84,6 +84,7 @@ include('sqlconnect.php');
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item"><a class="nav-link" href="add-event.php">ADD EVENT</a></li>
+           
             <li class="nav-item"><a class="nav-link" href="delete-event.php">DELETE EVENT</a></li>
             <li class="nav-item"><a class="nav-link" href="admin-dashboard.php">HOME</a></li>
             <li class="nav-item"><a class="nav-link" href="admin-login.php">LOGOUT</a></li>

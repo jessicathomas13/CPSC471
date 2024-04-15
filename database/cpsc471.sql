@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 13, 2024 at 10:08 PM
+-- Generation Time: Apr 16, 2024 at 01:13 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -140,7 +140,11 @@ CREATE TABLE `catalog` (
 --
 
 INSERT INTO `catalog` (`CatalogID`, `BranchID`, `BookID`, `Num_of_copies`, `Book Location`) VALUES
-(1, 32, '4516', 2, 'G-6');
+(1, 32, '4516', 2, 'G-6'),
+(2, 33, '3237', 2, 'F-19'),
+(3, 34, '5928', 3, 'B-24'),
+(4, 33, '4516', 2, 'B-24'),
+(5, 33, '1098', 2, 'G-9');
 
 -- --------------------------------------------------------
 
@@ -161,10 +165,10 @@ CREATE TABLE `event` (
 --
 
 INSERT INTO `event` (`EventID`, `EventName`, `BranchID`, `Date`, `Description`) VALUES
-(2332, 'Calligraphy class', 32, '2024-04-18 13:00:00.0000', 'Dive into the art of calligraphy at our library event! Discover the beauty of brushstrokes and lettering techniques with expert guidance. Join us for a creative journey into this timeless craft!'),
+(2332, 'Calligraphy Class', 34, '2024-04-13 21:38:00.0000', 'Dive into the art of calligraphy at our library event! Discover the beauty of brushstrokes and lettering techniques with expert guidance. Join us for a creative journey into this timeless craft!'),
 (3926, 'Gimme 10 Minutes: A Staged Reading', 34, '2024-05-25 20:00:00.0000', 'Celebrate the art of the ten-minute play! Enjoy dynamic short performances of new works from playwrights and theatre artists in this staged reading showcase.'),
 (4372, 'How We Gather Matters - Official Book Launch', 35, '2024-05-09 23:00:00.0000', 'Welcome to the Official Book Launch of \"How We Gather Matters\" by Leor Rotchild. Join us for an exciting, family-friendly event filled with insightful discussions.'),
-(6821, 'Game Night: Pictionary', 33, '2024-05-15 23:00:00.0000', 'Come join us for a fun evening filled with games, laughter, and good company. It\'s the perfect opportunity to unwind and enjoy some friendly competition.');
+(6821, 'Game Night: Pictionaryy', 34, '2024-04-17 22:49:00.0000', 'Come join us for a fun evening filled with games, laughter, and good company. It\'s the perfect opportunity to unwind and enjoy some friendly competition.');
 
 -- --------------------------------------------------------
 
@@ -207,7 +211,7 @@ INSERT INTO `publisher` (`Name`, `Address`, `Phone`) VALUES
 ('Addison Wesley', '1900 E Lake Ave Glenview, IL', '+1 (250) 380-6850'),
 ('Dover Publications', '1325 Franklin Ave, Ste 250, Garden City, NY 11530', '+1 (516) 742-50'),
 ('East India Publishing Company ', 'Ottawa, ON, Canada.', '+1 (613) 567-463'),
-('HarperCollins', '195 Broadway, New York, NY 10007', '+1 (844) 327-5757'),
+('HarperCollins', '2742heqfh', '37817319'),
 ('Pearson', '176 Yonge St, 6th floor. Toronto, ON', '+1 (800) 361-6128'),
 ('Penguin Books', '320 Front Street West, Suite 1400 Toronto, Ontario', '+1 (416) 364-4449'),
 ('Simon & Schuster', '166 King Street East, Suite 300. Toronto, ON', '+1 (647) 427-88');
@@ -225,7 +229,6 @@ CREATE TABLE `user` (
   `Address` varchar(100) NOT NULL,
   `Phone no.` varchar(15) NOT NULL,
   `Password` varchar(100) NOT NULL,
-  `Status` int(1) NOT NULL,
   `EmailID` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -233,9 +236,9 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`Cardno`, `BranchID`, `Name`, `Address`, `Phone no.`, `Password`, `Status`, `EmailID`) VALUES
-(56, 32, 'jj', 'enjkbd', '37283000', 'lol', 1, 'jj@gmail.com'),
-(38493, 32, 'abc', 'dkjwkblw', '37882773', 'abc123', 1, 'abc@gmail.com');
+INSERT INTO `user` (`Cardno`, `BranchID`, `Name`, `Address`, `Phone no.`, `Password`, `EmailID`) VALUES
+(56, 32, 'jj', 'enjkbd', '37283000', 'lol', 'jj@gmail.com'),
+(38493, 32, 'abc', 'dkjwkblw', '37882773', 'abc123', 'abc@gmail.com');
 
 --
 -- Indexes for dumped tables
@@ -288,7 +291,6 @@ ALTER TABLE `event`
 -- Indexes for table `loan`
 --
 ALTER TABLE `loan`
-  ADD PRIMARY KEY (`Loan date`),
   ADD KEY `loan_branch_id` (`BranchID`),
   ADD KEY `loan_book_id` (`BookID`),
   ADD KEY `cardno` (`Cardno`);
@@ -314,7 +316,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `catalog`
 --
 ALTER TABLE `catalog`
-  MODIFY `CatalogID` int(250) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `CatalogID` int(250) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Constraints for dumped tables

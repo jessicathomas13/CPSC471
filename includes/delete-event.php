@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     if (mysqli_stmt_num_rows($checkStmt) > 0) {
             // Admin exists, proceed with deletion
-            // SQL query to delete an admin
+            // SQL query to delete an event
             $deleteSql = "DELETE FROM event WHERE EventID = ?";
             $deleteStmt = mysqli_prepare($con, $deleteSql);
             mysqli_stmt_bind_param($deleteStmt, "s", $event);

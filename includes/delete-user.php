@@ -16,7 +16,7 @@ while ($row = mysqli_fetch_assoc($result)) {
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $cardno = $_POST["cardno"];
-    $password = $_POST["password"]; // Assuming users have a passwor
+    $password = $_POST["password"]; // Assuming users have a password
 
     // First, we check if the card number exists
     $query = "SELECT Password FROM admin WHERE Password = ?";

@@ -15,8 +15,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     mysqli_stmt_store_result($checkStmt);
     
     if (mysqli_stmt_num_rows($checkStmt) > 0) {
-            // Admin exists, proceed with deletion
-            // SQL query to delete an admin
+            
+            // SQL query to delete an author
             $deleteSql = "DELETE FROM author WHERE Name = ?";
             $deleteStmt = mysqli_prepare($con, $deleteSql);
             mysqli_stmt_bind_param($deleteStmt, "s", $author);

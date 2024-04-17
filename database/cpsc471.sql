@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 16, 2024 at 01:13 AM
+-- Generation Time: Apr 17, 2024 at 06:14 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -40,7 +40,7 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`Name`, `EmpID`, `BranchID`, `Password`, `EmailID`) VALUES
-('john', 33, 32, 'loll', 'john@gmail.com');
+('john', 33, 32, 'admin123', 'john@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -237,7 +237,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`Cardno`, `BranchID`, `Name`, `Address`, `Phone no.`, `Password`, `EmailID`) VALUES
-(56, 32, 'jj', 'enjkbd', '37283000', 'lol', 'jj@gmail.com'),
+(56, 32, 'jj', 'enjkbd', '37283000', 'user123', 'jj@gmail.com'),
 (38493, 32, 'abc', 'dkjwkblw', '37882773', 'abc123', 'abc@gmail.com');
 
 --

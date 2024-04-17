@@ -79,9 +79,8 @@ include('sqlconnect.php');
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ml-auto">
-            <li class="nav-item"><a class="nav-link" href="loan.php">BORROWED BOOKS</a></li>
-            <li class="nav-item"><a class="nav-link" href="event.php">EVENTS</a></li>
-            <li class="nav-item"><a class="nav-link" href="user-catalog.php">CATALOG</a></li>
+
+            <li class="nav-item"><a class="nav-link" href="dashboard.php">HOME</a></li>
             <li class="nav-item"><a class="nav-link" href="index.php">LOGOUT</a></li>
           </ul>
         </div>
